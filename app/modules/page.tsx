@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { ArrowLeft, BookOpen, Clock, ChevronRight } from "lucide-react";
 import { db } from "@/lib/db";
