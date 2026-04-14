@@ -9,17 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        mint: "#B4E3C8",
-        navy: "#00111B",
-        green: "#05A049",
-        cream: "#FFFFFC",
-        "navy-light": "#0A2236",
-        "navy-mid": "#0D2D45",
+        // Brand
+        navy:        "#00111B",
+        "navy-light":"#0A2236",
+        "navy-mid":  "#0D2D45",
+        green:       "#05A049",
+        "green-dark":"#03803A",
+        mint:        "#B4E3C8",
+        cream:       "#FFFFFC",
+        // Light theme surfaces
+        canvas:      "#F5F7FA",
+        surface:     "#FFFFFF",
+        "surface-2": "#F0F4F8",
+        // Light theme text
+        ink:         "#0F172A",
+        "ink-2":     "#475569",
+        "ink-3":     "#94A3B8",
+        // Light theme borders
+        line:        "#E2E8F0",
+        "line-2":    "#CBD5E1",
       },
       fontFamily: {
-        title: ["var(--font-title)", "sans-serif"],
+        title:   ["var(--font-title)", "sans-serif"],
         heading: ["var(--font-heading)", "sans-serif"],
-        body: ["var(--font-body)", "sans-serif"],
+        body:    ["var(--font-body)", "sans-serif"],
       },
     },
   },

@@ -12,7 +12,7 @@ interface NavLesson {
 interface Props {
   lessonId: string;
   moduleSlug: string;
-  currentIndex: number;   // 1-based
+  currentIndex: number;
   totalLessons: number;
   prev: NavLesson | null;
   next: NavLesson | null;
@@ -44,17 +44,12 @@ export default function LessonNav({
   }
 
   return (
-    <div
-      className="flex items-center gap-4 mt-14 pt-8"
-      style={{ borderTop: "1px solid rgba(255,255,252,0.08)" }}
-    >
-      {/* Previous */}
+    <div className="flex items-center gap-4 mt-14 pt-8 border-t border-line">
       {prev ? (
         <a
           href={prev.href}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="inline-flex items-center gap-2 font-body text-sm text-cream/70 hover:text-cream px-6 py-2.5 rounded-xl transition-colors"
-          style={{ border: "1px solid rgba(255,255,252,0.15)" }}
+          className="inline-flex items-center gap-2 font-body text-sm text-ink-2 hover:text-ink px-5 py-2.5 rounded-xl border border-line hover:border-line-2 transition-colors"
         >
           ← Previous
         </a>
@@ -62,38 +57,36 @@ export default function LessonNav({
         <div className="w-28" />
       )}
 
-      {/* Progress indicator */}
       <div className="flex-1 text-center">
-        <p className="font-body text-xs text-cream/40">
+        <p className="font-body text-xs text-ink-3 mb-1.5">
           Lesson {currentIndex} of {totalLessons}
         </p>
-        {/* Progress dots */}
-        <div className="flex items-center justify-center gap-1 mt-1.5">
+        <div className="flex items-center justify-center gap-1">
           {Array.from({ length: totalLessons }).map((_, i) => (
             <span
               key={i}
               className="rounded-full transition-all"
               style={{
-                width: i + 1 === currentIndex ? "16px" : "6px",
-                height: "6px",
+                width: i + 1 === currentIndex ? 16 : 6,
+                height: 6,
                 backgroundColor:
                   i + 1 < currentIndex
                     ? "#05A049"
                     : i + 1 === currentIndex
-                    ? "#B4E3C8"
-                    : "rgba(255,255,252,0.12)",
+                    ? "#00111B"
+                    : "#E2E8F0",
               }}
             />
           ))}
         </div>
       </div>
 
-      {/* Next / Finish */}
       {next ? (
         <button
           onClick={handleNext}
           disabled={loading}
-          className="inline-flex items-center gap-2 font-body text-sm font-medium text-white px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60 bg-green hover:bg-[#03803A]"
+          className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white px-5 py-2.5 rounded-xl disabled:opacity-60 transition-opacity"
+          style={{ backgroundColor: "#05A049" }}
         >
           {loading ? (
             <span className="flex items-center gap-2">
@@ -101,14 +94,15 @@ export default function LessonNav({
               Saving…
             </span>
           ) : (
-            <>Next →</>
+            "Next →"
           )}
         </button>
       ) : (
         <button
           onClick={handleFinish}
           disabled={loading}
-          className="inline-flex items-center gap-2 font-body text-sm font-medium text-white px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60 bg-green hover:bg-[#03803A]"
+          className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white px-5 py-2.5 rounded-xl disabled:opacity-60 transition-opacity"
+          style={{ backgroundColor: "#05A049" }}
         >
           {loading ? (
             <span className="flex items-center gap-2">
@@ -116,7 +110,7 @@ export default function LessonNav({
               Saving…
             </span>
           ) : (
-            <>Finish chapter ✓</>
+            "Finish chapter ✓"
           )}
         </button>
       )}

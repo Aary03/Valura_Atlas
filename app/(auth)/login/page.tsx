@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,142 +18,102 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-
     setLoading(false);
-
     if (result?.error) {
-      setError("Invalid email or password. Please try again.");
-      return;
+      setError("Incorrect email or password. Please try again.");
+    } else {
+      router.push("/explore");
     }
-
-    router.push("/explore");
-    router.refresh();
   }
 
   return (
-    <div className="relative z-10 w-full max-w-md">
+    <div className="w-full max-w-md">
       {/* Card */}
-      <div
-        className="rounded-2xl border border-white/10 p-10"
-        style={{ backgroundColor: "#0A2236" }}
-      >
-        {/* Wordmark */}
-        <div className="mb-8 text-center">
-          <h1 className="font-title text-3xl font-bold text-cream tracking-tight">
-            Atlas
+      <div className="bg-white rounded-2xl border border-line shadow-sm p-8">
+        <div className="mb-8">
+          <h1 className="font-title text-2xl font-bold text-navy mb-1">
+            Welcome back
           </h1>
-          <p className="text-xs text-cream/40 font-body mt-1 tracking-widest uppercase">
-            by Valura
-          </p>
-          <p className="font-body text-cream/55 text-sm mt-4 leading-relaxed">
-            Navigate the world of global investing
+          <p className="font-body text-sm text-ink-2">
+            Sign in to continue your learning journey.
           </p>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/5 mb-8" />
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
-          {/* Email */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="email"
-              className="block text-xs font-heading font-semibold text-cream/55 tracking-wide uppercase"
-            >
-              Email
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block font-body text-sm font-medium text-ink mb-1.5">
+              Email address
             </label>
             <input
-              id="email"
               type="email"
-              autoComplete="email"
-              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               placeholder="you@example.com"
-              className="w-full h-11 px-4 rounded-xl bg-transparent border border-white/10 text-cream text-sm font-body placeholder:text-cream/20 focus:outline-none focus:border-green transition-colors"
+              className="w-full font-body text-sm text-ink bg-white border border-line rounded-xl px-4 py-3 outline-none transition-colors focus:border-green placeholder:text-ink-3"
             />
           </div>
 
-          {/* Password */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="password"
-              className="block text-xs font-heading font-semibold text-cream/55 tracking-wide uppercase"
-            >
+          <div>
+            <label className="block font-body text-sm font-medium text-ink mb-1.5">
               Password
             </label>
             <div className="relative">
               <input
-                id="password"
                 type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full h-11 px-4 pr-11 rounded-xl bg-transparent border border-white/10 text-cream text-sm font-body placeholder:text-cream/20 focus:outline-none focus:border-green transition-colors"
+                required
+                placeholder="Your password"
+                className="w-full font-body text-sm text-ink bg-white border border-line rounded-xl px-4 py-3 pr-11 outline-none transition-colors focus:border-green placeholder:text-ink-3"
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-cream/30 hover:text-cream/60 transition-colors"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-3 hover:text-ink-2 transition-colors"
               >
-                {showPassword ? (
-                  <EyeOff className="w-4 h-4" />
-                ) : (
-                  <Eye className="w-4 h-4" />
-                )}
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
 
-          {/* Error */}
           {error && (
-            <p className="text-sm font-body text-red-400/90 bg-red-500/5 border border-red-500/10 rounded-lg px-4 py-2.5">
-              {error}
-            </p>
+            <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <span className="font-body text-sm text-red-600">{error}</span>
+            </div>
           )}
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-12 rounded-xl font-heading font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all disabled:opacity-60"
+            className="w-full flex items-center justify-center gap-2 font-body text-sm font-semibold text-white h-12 rounded-xl transition-all disabled:opacity-60"
             style={{ backgroundColor: "#05A049" }}
           >
-            {loading ? (
-              <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Signing in…
-              </span>
-            ) : (
+            {loading ? "Signing in…" : (
               <>
                 Sign in
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight size={15} />
               </>
             )}
           </button>
         </form>
 
-        {/* Footer link */}
-        <p className="mt-6 text-center text-sm font-body text-cream/35">
+        <p className="font-body text-sm text-ink-2 text-center mt-6">
           Don&apos;t have an account?{" "}
-          <Link
-            href="/signup"
-            className="text-mint hover:text-mint/80 transition-colors font-medium"
-          >
-            Sign up
+          <Link href="/signup" className="text-green font-medium hover:underline">
+            Create one free
           </Link>
         </p>
       </div>
+
+      <p className="font-body text-xs text-ink-3 text-center mt-5">
+        Regulated by IFSCA · GIFT City, Gandhinagar
+      </p>
     </div>
   );
 }

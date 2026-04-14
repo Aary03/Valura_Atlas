@@ -8,12 +8,10 @@ export default function ShareButton() {
 
   async function handleShare() {
     const url = window.location.href;
-
     if (navigator.share) {
       await navigator.share({ url, title: document.title }).catch(() => {});
       return;
     }
-
     await navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -22,15 +20,12 @@ export default function ShareButton() {
   return (
     <button
       onClick={handleShare}
-      className="flex items-center gap-1.5 font-body text-sm transition-colors"
-      style={{ color: copied ? "#B4E3C8" : "rgba(255,255,252,0.50)" }}
+      className={`flex items-center gap-1.5 font-body text-xs transition-colors ${
+        copied ? "text-green" : "text-ink-3 hover:text-ink-2"
+      }`}
       aria-label="Share lesson"
     >
-      {copied ? (
-        <Check className="w-4 h-4" />
-      ) : (
-        <Share2 className="w-4 h-4" />
-      )}
+      {copied ? <Check size={14} /> : <Share2 size={14} />}
       <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
     </button>
   );

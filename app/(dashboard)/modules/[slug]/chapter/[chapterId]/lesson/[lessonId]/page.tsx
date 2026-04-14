@@ -21,14 +21,11 @@ interface Props {
 }
 
 async function getPageData(slug: string, chapterId: string, lessonId: string) {
-  // Fetch the current lesson with its chapter + module
   const lesson = await db.lesson.findUnique({
     where: { id: lessonId },
     include: {
       chapter: {
-        include: {
-          module: true,
-        },
+        include: { module: true },
       },
     },
   });
@@ -41,7 +38,6 @@ async function getPageData(slug: string, chapterId: string, lessonId: string) {
     return null;
   }
 
-  // All lessons for this module in reading order (for prev/next + total count)
   const allChapters = await db.chapter.findMany({
     where: { moduleId: lesson.chapter.moduleId },
     orderBy: { order: "asc" },
@@ -53,7 +49,6 @@ async function getPageData(slug: string, chapterId: string, lessonId: string) {
     },
   });
 
-  // Flatten into an ordered lesson list
   const flatLessons = allChapters.flatMap((ch) =>
     ch.lessons.map((l) => ({
       id: l.id,
@@ -84,9 +79,8 @@ async function getPageData(slug: string, chapterId: string, lessonId: string) {
     mod: lesson.chapter.module,
     prevLesson,
     nextLesson,
-    lessonIndexInModule: currentIndex + 1, // 1-based
+    lessonIndexInModule: currentIndex + 1,
     totalLessonsInModule: flatLessons.length,
-    // Position within the chapter (0-based) — derived from the chapter's flat lesson list
     lessonIndexInChapter:
       allChapters
         .find((ch) => ch.id === chapterId)
@@ -95,35 +89,26 @@ async function getPageData(slug: string, chapterId: string, lessonId: string) {
 }
 
 export default async function LessonPage({ params }: Props) {
-  const session = await getServerSession(authOptions);
-  void session; // auth guard is in the parent layout
+  void await getServerSession(authOptions);
 
   const data = await getPageData(params.slug, params.chapterId, params.lessonId);
   if (!data) notFound();
 
   const { lesson, chapter, mod, prevLesson, nextLesson, lessonIndexInModule, totalLessonsInModule, lessonIndexInChapter } = data;
 
-  // Pick a quiz question based on lesson position
   const moduleQuestions = QUIZ_QUESTIONS[mod.slug] ?? [];
   const quizQuestion =
     moduleQuestions.length > 0
       ? moduleQuestions[lessonIndexInChapter % moduleQuestions.length]
       : null;
 
-  // Show exercise block on every last lesson in a chapter (index 0 = first lesson)
-  const showExercise = !nextLesson || (nextLesson && lessonIndexInChapter % 3 === 2);
+  const showExercise = !nextLesson || lessonIndexInChapter % 3 === 2;
   const exercisePrompt = EXERCISE_PROMPTS[mod.slug];
 
   return (
     <>
-      {/* ── Sub-bar: breadcrumb + meta ─────────────── */}
-      <div
-        className="sticky top-16 z-40 w-full px-4 sm:px-6 py-3 flex items-center justify-between gap-4 overflow-hidden"
-        style={{
-          backgroundColor: "#00111B",
-          borderBottom: "1px solid rgba(255,255,252,0.06)",
-        }}
-      >
+      {/* Sub-bar */}
+      <div className="sticky top-16 z-40 w-full bg-white border-b border-line px-4 sm:px-6 py-3 flex items-center justify-between gap-4 overflow-hidden">
         <Breadcrumb
           items={[
             { label: "Explore", href: "/explore" },
@@ -132,49 +117,32 @@ export default async function LessonPage({ params }: Props) {
             { label: lesson.title },
           ]}
         />
-
-        <div className="flex items-center gap-4 flex-shrink-0 ml-4">
-          <span className="hidden sm:flex items-center gap-1.5 font-body text-sm text-cream/50">
-            <Clock className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <span className="hidden sm:flex items-center gap-1.5 font-body text-xs text-ink-3">
+            <Clock size={13} />
             {lesson.readTime} min read
           </span>
           <ShareButton />
         </div>
       </div>
 
-      {/* ── Article body ───────────────────────────── */}
+      {/* Article */}
       <article className="max-w-2xl mx-auto px-5 sm:px-6 py-10 pb-16">
-        {/* Lesson title */}
-        <h1 className="font-title text-3xl md:text-4xl font-bold text-cream leading-snug mb-6">
+        {/* Chapter label */}
+        <div className="flex items-center gap-2 mb-5">
+          <span className="font-body text-xs font-medium text-ink-3 bg-surface-2 border border-line px-2.5 py-1 rounded-full">
+            {chapter.title}
+          </span>
+          <span className="text-line-2 text-xs">·</span>
+          <span className="font-body text-xs text-ink-3">{lesson.readTime} min read</span>
+        </div>
+
+        {/* Title */}
+        <h1 className="font-title text-3xl md:text-4xl font-bold text-navy leading-snug mb-8">
           {lesson.title}
         </h1>
 
-        {/* Chapter context pill */}
-        <div className="flex items-center gap-2 mb-8">
-          <span
-            className="font-body text-xs px-2.5 py-1 rounded-full"
-            style={{
-              backgroundColor: "rgba(255,255,252,0.06)",
-              color: "rgba(255,255,252,0.45)",
-            }}
-          >
-            {chapter.title}
-          </span>
-          <span
-            className="font-body text-xs"
-            style={{ color: "rgba(255,255,252,0.25)" }}
-          >
-            ·
-          </span>
-          <span
-            className="font-body text-xs"
-            style={{ color: "rgba(255,255,252,0.25)" }}
-          >
-            {lesson.readTime} min
-          </span>
-        </div>
-
-        {/* Body content */}
+        {/* Body */}
         <LessonBody content={lesson.content} />
 
         {/* Quiz */}

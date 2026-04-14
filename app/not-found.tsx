@@ -3,46 +3,24 @@ import { ArrowRight } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
-      style={{ backgroundColor: "#00111B" }}
-    >
-      {/* Subtle glow */}
-      <div
-        aria-hidden
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 40% at 50% 40%, rgba(5,160,73,0.05) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative z-10">
-        <p
-          className="font-title font-bold leading-none mb-4 select-none"
-          style={{ fontSize: "clamp(6rem, 20vw, 10rem)", color: "rgba(255,255,252,0.06)" }}
-          aria-hidden
-        >
-          404
-        </p>
-
-        <div className="-mt-8 md:-mt-12">
-          <h1 className="font-title text-3xl md:text-4xl font-bold text-cream mb-3">
-            This page doesn&apos;t exist.
-          </h1>
-          <p className="font-body text-base mb-8" style={{ color: "rgba(255,255,252,0.50)" }}>
-            The URL you followed might be broken, or the page has moved.
-          </p>
-
-          <Link
-            href="/explore"
-            className="inline-flex items-center gap-2 font-body text-sm font-medium text-white px-7 py-3 rounded-xl transition-colors bg-green hover:bg-[#03803A]"
-          >
-            Back to Explore
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+    <div className="min-h-screen bg-canvas flex flex-col items-center justify-center px-6 text-center">
+      <div className="font-title text-[120px] md:text-[180px] font-bold text-line leading-none select-none">
+        404
       </div>
+      <h1 className="font-title text-2xl font-bold text-navy mt-2 mb-2">
+        This page doesn&apos;t exist.
+      </h1>
+      <p className="font-body text-sm text-ink-2 mb-8 max-w-xs">
+        The page you&apos;re looking for may have been moved or deleted.
+      </p>
+      <Link
+        href="/explore"
+        className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white px-6 py-3 rounded-xl transition-all hover:opacity-90"
+        style={{ backgroundColor: "#05A049" }}
+      >
+        Back to Explore
+        <ArrowRight size={15} />
+      </Link>
     </div>
   );
 }
