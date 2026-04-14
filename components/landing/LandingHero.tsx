@@ -20,7 +20,7 @@ export default function LandingHero() {
           top: "20%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 600,
+          width: "min(600px, 100vw)",
           height: 400,
           background: "radial-gradient(circle, #B4E3C8 0%, transparent 70%)",
           opacity: 0.35,
@@ -30,14 +30,15 @@ export default function LandingHero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center pt-24 pb-16">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-5 text-center pt-24 pb-20">
         {/* Eyebrow */}
-        <div className="inline-flex items-center font-body text-xs font-medium tracking-wide px-4 py-1.5 rounded-full mb-6"
+        <div
+          className="inline-flex items-center font-body text-xs font-medium tracking-wide px-3 py-1.5 rounded-full mb-5"
           style={{
             backgroundColor: "rgba(180,227,200,0.40)",
             border: "1px solid rgba(5,160,73,0.20)",
             color: "#05A049",
-            letterSpacing: "0.08em",
+            letterSpacing: "0.06em",
           }}
         >
           FREE · STRUCTURED · FOR INDIAN INVESTORS
@@ -45,14 +46,13 @@ export default function LandingHero() {
 
         {/* Headline */}
         <h1
-          className="font-title font-bold leading-[1.05] tracking-tight mb-6"
-          style={{ fontSize: "clamp(2.8rem, 7vw, 5rem)", color: "#00111B" }}
+          className="font-title font-bold leading-[1.05] tracking-tight mb-5"
+          style={{ fontSize: "clamp(2.2rem, 8vw, 5rem)", color: "#00111B" }}
         >
           The world is your
           <br />
           <span className="relative inline-block">
             portfolio.
-            {/* Wavy SVG underline */}
             <svg
               aria-hidden
               viewBox="0 0 280 10"
@@ -74,7 +74,7 @@ export default function LandingHero() {
 
         {/* Subheading */}
         <p
-          className="font-body text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-10"
+          className="font-body text-base md:text-xl leading-relaxed max-w-xl mx-auto mb-8"
           style={{ color: "rgba(0,17,27,0.60)" }}
         >
           Atlas teaches Indian investors how to think globally — the
@@ -83,10 +83,10 @@ export default function LandingHero() {
         </p>
 
         {/* CTA row */}
-        <div className="flex items-center justify-center gap-4 flex-wrap mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-7">
           <a
             href="/signup"
-            className="font-body text-base font-semibold text-white h-12 px-8 rounded-full transition-all duration-200 hover:opacity-90 inline-flex items-center"
+            className="font-body text-base font-semibold text-white w-full sm:w-auto h-12 px-8 rounded-full transition-all duration-200 hover:opacity-90 inline-flex items-center justify-center"
             style={{
               backgroundColor: "#05A049",
               boxShadow: "0 8px 24px rgba(5,160,73,0.20)",
@@ -96,13 +96,11 @@ export default function LandingHero() {
           </a>
           <button
             onClick={() => scrollTo("#modules")}
-            className="font-body text-base h-12 px-8 rounded-full transition-all duration-200"
+            className="font-body text-base w-full sm:w-auto h-12 px-8 rounded-full transition-all duration-200 inline-flex items-center justify-center"
             style={{
               border: "1px solid rgba(0,17,27,0.15)",
               color: "#00111B",
             }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(0,17,27,0.40)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(0,17,27,0.15)")}
           >
             Explore modules ↓
           </button>
@@ -110,20 +108,20 @@ export default function LandingHero() {
 
         {/* Trust row */}
         <div
-          className="flex items-center justify-center gap-3 flex-wrap font-body text-xs"
+          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-body text-xs"
           style={{ color: "rgba(0,17,27,0.40)" }}
         >
           <span>Regulated by IFSCA</span>
-          <span style={{ color: "rgba(0,17,27,0.25)" }}>·</span>
+          <span className="hidden sm:inline" style={{ color: "rgba(0,17,27,0.25)" }}>·</span>
           <span>GIFT City, Gandhinagar</span>
-          <span style={{ color: "rgba(0,17,27,0.25)" }}>·</span>
+          <span className="hidden sm:inline" style={{ color: "rgba(0,17,27,0.25)" }}>·</span>
           <span>Free for Valura users</span>
         </div>
       </div>
 
       {/* Scroll cue */}
       <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
         style={{ color: "rgba(0,17,27,0.25)" }}
       >
         <ChevronDown size={20} />

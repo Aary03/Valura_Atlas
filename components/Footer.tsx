@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-line mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
         <div className="flex items-center gap-2">
           <span className="font-title text-sm font-bold text-navy">Atlas</span>
           <span className="text-ink-3 text-xs">by Valura</span>

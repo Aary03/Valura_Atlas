@@ -1,6 +1,6 @@
 export default function ExploreLoading() {
   return (
-    <main className="max-w-7xl mx-auto px-6 py-10">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
       {/* Hero skeleton */}
       <div className="mb-10 space-y-3 animate-pulse">
         <div className="h-3 w-24 bg-line rounded-full" />
@@ -15,7 +15,7 @@ export default function ExploreLoading() {
 
       {/* Grid skeleton */}
       <div className="h-7 w-36 bg-line rounded-lg mb-5 animate-pulse" />
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid sm:grid-cols-2 gap-4">
         {[1, 2, 3, 4, 5].map((i) => (
           <div
             key={i}

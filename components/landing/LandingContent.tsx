@@ -4,9 +4,7 @@ import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import FadeIn from "./FadeIn";
 
-/* ─────────────────────────────────────────────────────────── */
-/* TICKER                                                      */
-/* ─────────────────────────────────────────────────────────── */
+/* ─── TICKER ─────────────────────────────────────────────── */
 
 const tickerItems = [
   "5 Learning Modules",
@@ -19,26 +17,23 @@ const tickerItems = [
 ];
 
 function Ticker() {
-  const items = [...tickerItems, ...tickerItems]; // duplicate for seamless loop
+  const items = [...tickerItems, ...tickerItems];
   return (
     <div
       id="stats"
       className="w-full overflow-hidden flex items-center"
-      style={{ height: 72, backgroundColor: "#00111B" }}
+      style={{ height: 64, backgroundColor: "#00111B" }}
     >
-      <div className="animate-ticker flex items-center gap-0 whitespace-nowrap">
+      <div className="animate-ticker flex items-center whitespace-nowrap">
         {items.map((item, i) => (
           <span key={i} className="flex items-center">
             <span
-              className="font-body text-sm font-medium uppercase tracking-widest"
+              className="font-body text-xs font-medium uppercase tracking-widest"
               style={{ color: "rgba(255,255,252,0.70)" }}
             >
               {item}
             </span>
-            <span
-              className="mx-8 text-xl font-bold select-none"
-              style={{ color: "#B4E3C8" }}
-            >
+            <span className="mx-6 text-lg font-bold select-none" style={{ color: "#B4E3C8" }}>
               ·
             </span>
           </span>
@@ -48,9 +43,7 @@ function Ticker() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/* WHY ATLAS                                                   */
-/* ─────────────────────────────────────────────────────────── */
+/* ─── WHY ATLAS ──────────────────────────────────────────── */
 
 const features = [
   "Built for Indian residents under LRS and FEMA",
@@ -68,20 +61,13 @@ const statCards = [
 
 function WhyAtlas() {
   return (
-    <section id="why" className="py-24 px-6" style={{ backgroundColor: "#FFFFFC" }}>
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        {/* Left */}
+    <section id="why" className="py-16 md:py-24 px-5" style={{ backgroundColor: "#FFFFFC" }}>
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <FadeIn>
-          <p
-            className="font-body text-xs font-semibold tracking-widest uppercase mb-3"
-            style={{ color: "#05A049" }}
-          >
+          <p className="font-body text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "#05A049" }}>
             WHY ATLAS
           </p>
-          <h2
-            className="font-heading text-4xl font-bold leading-snug mb-4"
-            style={{ color: "#00111B" }}
-          >
+          <h2 className="font-heading text-3xl md:text-4xl font-bold leading-snug mb-4" style={{ color: "#00111B" }}>
             98% of Indian portfolios never leave India.
           </h2>
           <div className="space-y-3 mb-8">
@@ -99,40 +85,30 @@ function WhyAtlas() {
             {features.map((f) => (
               <li key={f} className="flex items-start gap-2.5">
                 <CheckCircle2 size={16} color="#05A049" className="mt-0.5 flex-shrink-0" />
-                <span className="font-body text-sm" style={{ color: "rgba(0,17,27,0.75)" }}>
-                  {f}
-                </span>
+                <span className="font-body text-sm" style={{ color: "rgba(0,17,27,0.75)" }}>{f}</span>
               </li>
             ))}
           </ul>
         </FadeIn>
 
-        {/* Right — stat cards 2×2 */}
         <FadeIn delay={150}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
             {statCards.map((c) => (
               <div
                 key={c.label}
-                className="card-hover rounded-2xl p-6"
+                className="card-hover rounded-2xl p-5 md:p-6"
                 style={
                   c.dark
                     ? { backgroundColor: "#00111B" }
-                    : {
-                        backgroundColor: "#FFFFFF",
-                        border: "1px solid rgba(0,17,27,0.08)",
-                      }
+                    : { backgroundColor: "#FFFFFF", border: "1px solid rgba(0,17,27,0.08)" }
                 }
               >
-                <div
-                  className="font-title text-5xl font-bold leading-none mb-2"
-                  style={{ color: c.dark ? "#B4E3C8" : "#05A049" }}
-                >
+                <div className="font-title text-4xl md:text-5xl font-bold leading-none mb-2"
+                  style={{ color: c.dark ? "#B4E3C8" : "#05A049" }}>
                   {c.value}
                 </div>
-                <div
-                  className="font-body text-sm"
-                  style={{ color: c.dark ? "rgba(255,255,252,0.50)" : "rgba(0,17,27,0.50)" }}
-                >
+                <div className="font-body text-xs md:text-sm"
+                  style={{ color: c.dark ? "rgba(255,255,252,0.50)" : "rgba(0,17,27,0.50)" }}>
                   {c.label}
                 </div>
               </div>
@@ -144,100 +120,51 @@ function WhyAtlas() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/* MODULES                                                     */
-/* ─────────────────────────────────────────────────────────── */
+/* ─── MODULES ────────────────────────────────────────────── */
 
 const modules = [
-  {
-    num: "01",
-    numColor: "#05A049",
-    level: "Beginner",
-    meta: "4 chapters · 31 min",
-    title: "Why Invest Beyond India",
-    desc: "Does diversification mean more than owning different stocks?",
-    slug: "why-invest-beyond-india",
-  },
-  {
-    num: "02",
-    numColor: "#2D9E6B",
-    level: "Beginner",
-    meta: "7 chapters · 1.8 hrs",
-    title: "Accessing Global Markets",
-    desc: "Investing globally is legal, accessible, and very doable for Indian residents.",
-    slug: "accessing-global-markets",
-  },
-  {
-    num: "03",
-    numColor: "rgba(0,17,27,0.20)",
-    level: "Beginner",
-    meta: "4 chapters · 40 min",
-    title: "Cross-Border Money Movement",
-    desc: "Three forces shape your actual return: asset performance, currency, and costs.",
-    slug: "cross-border-money-movement",
-  },
-  {
-    num: "04",
-    numColor: "#05A049",
-    level: "Beginner",
-    meta: "5 chapters · 1.5 hrs",
-    title: "Understanding US Stocks",
-    desc: "The US equity market is the largest and most liquid in the world.",
-    slug: "understanding-us-stocks",
-  },
-  {
-    num: "05",
-    numColor: "#00111B",
-    level: "Intermediate",
-    meta: "5 chapters · 1.5 hrs",
-    title: "Tax & Compliance for Global Investors",
-    desc: "What the taxman thinks when you invest globally — and how to stay clean.",
-    slug: "tax-compliance-global-investors",
-  },
+  { num: "01", numColor: "#05A049", level: "Beginner", meta: "4 chapters · 31 min", title: "Why Invest Beyond India", desc: "Does diversification mean more than owning different stocks?", slug: "why-invest-beyond-india" },
+  { num: "02", numColor: "#2D9E6B", level: "Beginner", meta: "7 chapters · 1.8 hrs", title: "Accessing Global Markets", desc: "Investing globally is legal, accessible, and very doable for Indian residents.", slug: "accessing-global-markets" },
+  { num: "03", numColor: "rgba(0,17,27,0.20)", level: "Beginner", meta: "4 chapters · 40 min", title: "Cross-Border Money Movement", desc: "Three forces shape your actual return: asset performance, currency, and costs.", slug: "cross-border-money-movement" },
+  { num: "04", numColor: "#05A049", level: "Beginner", meta: "5 chapters · 1.5 hrs", title: "Understanding US Stocks", desc: "The US equity market is the largest and most liquid in the world.", slug: "understanding-us-stocks" },
+  { num: "05", numColor: "#00111B", level: "Intermediate", meta: "5 chapters · 1.5 hrs", title: "Tax & Compliance for Global Investors", desc: "What the taxman thinks when you invest globally — and how to stay clean.", slug: "tax-compliance-global-investors" },
 ];
 
 function Modules() {
   return (
-    <section id="modules" className="py-24 px-6" style={{ backgroundColor: "#F4FBF7" }}>
+    <section id="modules" className="py-16 md:py-24 px-5" style={{ backgroundColor: "#F4FBF7" }}>
       <div className="max-w-6xl mx-auto">
-        <FadeIn className="text-center mb-16">
-          <p
-            className="font-body text-xs font-semibold tracking-widest uppercase mb-3"
-            style={{ color: "#05A049" }}
-          >
+        <FadeIn className="text-center mb-10 md:mb-16">
+          <p className="font-body text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "#05A049" }}>
             THE CURRICULUM
           </p>
-          <h2 className="font-heading text-4xl font-bold" style={{ color: "#00111B" }}>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold" style={{ color: "#00111B" }}>
             Five modules. One complete picture.
           </h2>
-          <p
-            className="font-body text-base mt-3 max-w-xl mx-auto leading-relaxed"
-            style={{ color: "rgba(0,17,27,0.55)" }}
-          >
-            From understanding why global diversification matters, to filing
-            your Schedule FA — we cover the full journey.
+          <p className="font-body text-sm md:text-base mt-3 max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(0,17,27,0.55)" }}>
+            From understanding why global diversification matters, to filing your Schedule FA — we cover the full journey.
           </p>
         </FadeIn>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {modules.map((m, i) => (
-            <FadeIn key={m.num} delay={i * 80}>
+            <FadeIn key={m.num} delay={i * 60}>
               <Link
                 href={`/modules/${m.slug}`}
-                className="card-hover bg-white rounded-2xl px-8 py-6 flex items-center gap-8 block"
+                className="card-hover bg-white rounded-2xl px-4 sm:px-8 py-5 flex items-center gap-4 sm:gap-8 block"
                 style={{ border: "1px solid rgba(0,17,27,0.08)" }}
               >
                 {/* Number */}
                 <div
-                  className="font-title text-6xl font-bold flex-shrink-0 select-none"
-                  style={{ color: m.numColor, minWidth: 80 }}
+                  className="font-title text-4xl sm:text-6xl font-bold flex-shrink-0 select-none"
+                  style={{ color: m.numColor, minWidth: 48 }}
                 >
                   {m.num}
                 </div>
 
                 {/* Center */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span
                       className="font-body text-xs font-medium px-2 py-0.5 rounded-full"
                       style={{
@@ -247,56 +174,41 @@ function Modules() {
                     >
                       {m.level}
                     </span>
-                    <span
-                      className="font-body text-xs"
-                      style={{ color: "rgba(0,17,27,0.45)" }}
-                    >
+                    <span className="font-body text-xs" style={{ color: "rgba(0,17,27,0.45)" }}>
                       {m.meta}
                     </span>
                   </div>
-                  <h3
-                    className="font-heading text-xl font-semibold"
-                    style={{ color: "#00111B" }}
-                  >
+                  <h3 className="font-heading text-base sm:text-xl font-semibold" style={{ color: "#00111B" }}>
                     {m.title}
                   </h3>
-                  <p
-                    className="font-body text-sm mt-1.5"
-                    style={{ color: "rgba(0,17,27,0.55)" }}
-                  >
+                  <p className="font-body text-xs sm:text-sm mt-1 hidden sm:block" style={{ color: "rgba(0,17,27,0.55)" }}>
                     {m.desc}
                   </p>
                 </div>
 
-                {/* Right CTA */}
-                <div className="hidden md:flex items-center gap-1 font-body text-sm font-medium flex-shrink-0"
-                  style={{ color: "#05A049" }}>
-                  Start module <ArrowRight size={14} />
-                </div>
+                {/* Arrow */}
+                <ArrowRight size={18} color="#05A049" className="flex-shrink-0" />
               </Link>
             </FadeIn>
           ))}
         </div>
 
-        <FadeIn className="text-center mt-12 space-y-4">
+        <FadeIn className="text-center mt-10 space-y-4">
           <p className="font-body text-sm" style={{ color: "rgba(0,17,27,0.45)" }}>
             All modules are free for Valura account holders.
           </p>
-          <div className="flex items-center justify-center gap-3 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/signup"
-              className="font-body text-sm font-semibold text-white px-6 h-10 rounded-full inline-flex items-center gap-2 hover:opacity-90 transition"
+              className="font-body text-sm font-semibold text-white w-full sm:w-auto px-6 h-10 rounded-full inline-flex items-center justify-center gap-2 hover:opacity-90 transition"
               style={{ backgroundColor: "#05A049" }}
             >
               Create free account →
             </Link>
             <Link
               href="/login"
-              className="font-body text-sm px-6 h-10 rounded-full inline-flex items-center gap-2 transition"
-              style={{
-                border: "1px solid rgba(0,17,27,0.15)",
-                color: "rgba(0,17,27,0.65)",
-              }}
+              className="font-body text-sm w-full sm:w-auto px-6 h-10 rounded-full inline-flex items-center justify-center gap-2 transition"
+              style={{ border: "1px solid rgba(0,17,27,0.15)", color: "rgba(0,17,27,0.65)" }}
             >
               Already have an account? Sign in
             </Link>
@@ -307,77 +219,47 @@ function Modules() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/* HOW IT WORKS                                                */
-/* ─────────────────────────────────────────────────────────── */
+/* ─── HOW IT WORKS ───────────────────────────────────────── */
 
 const steps = [
-  {
-    n: "1",
-    title: "Read",
-    body: "Each lesson is written like a thoughtful explainer — not a textbook. 2–5 minutes per lesson.",
-  },
-  {
-    n: "2",
-    title: "Test yourself",
-    body: "Quick checks after each lesson make sure the concept actually sticks. No grades, no pressure.",
-  },
-  {
-    n: "3",
-    title: "Apply it",
-    body: "Every chapter ends with a short reflection exercise — connecting the concept to your own portfolio.",
-  },
+  { n: "1", title: "Read", body: "Each lesson is written like a thoughtful explainer — not a textbook. 2–5 minutes per lesson." },
+  { n: "2", title: "Test yourself", body: "Quick checks after each lesson make sure the concept actually sticks. No grades, no pressure." },
+  { n: "3", title: "Apply it", body: "Every chapter ends with a short reflection exercise — connecting the concept to your own portfolio." },
 ];
 
 function HowItWorks() {
   return (
-    <section id="how" className="py-24 px-6" style={{ backgroundColor: "#FFFFFC" }}>
+    <section id="how" className="py-16 md:py-24 px-5" style={{ backgroundColor: "#FFFFFC" }}>
       <div className="max-w-5xl mx-auto">
-        <FadeIn className="text-center mb-16">
-          <p
-            className="font-body text-xs font-semibold tracking-widest uppercase mb-3"
-            style={{ color: "#05A049" }}
-          >
+        <FadeIn className="text-center mb-10 md:mb-16">
+          <p className="font-body text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "#05A049" }}>
             HOW IT WORKS
           </p>
-          <h2 className="font-heading text-4xl font-bold" style={{ color: "#00111B" }}>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold" style={{ color: "#00111B" }}>
             Learning that respects your time.
           </h2>
         </FadeIn>
 
         <FadeIn>
-          <div className="relative grid md:grid-cols-3 gap-10 md:gap-0">
-            {/* Dashed connector line — desktop only */}
-            <div
-              className="hidden md:block absolute top-5 left-[calc(16.66%+20px)] right-[calc(16.66%+20px)]"
-              style={{ borderTop: "2px dashed #B4E3C8" }}
-            />
-
+          <div className="relative grid md:grid-cols-3 gap-8 md:gap-0">
+            <div className="hidden md:block absolute top-5 left-[calc(16.66%+20px)] right-[calc(16.66%+20px)]"
+              style={{ borderTop: "2px dashed #B4E3C8" }} />
             {steps.map((s) => (
-              <div key={s.n} className="relative text-center md:px-10">
-                {/* Number circle */}
+              <div key={s.n} className="relative text-center md:px-10 flex md:flex-col items-start md:items-center gap-4 md:gap-0">
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4 font-title text-base font-bold relative z-10"
-                  style={{
-                    backgroundColor: "rgba(5,160,73,0.10)",
-                    border: "1px solid rgba(5,160,73,0.20)",
-                    color: "#05A049",
-                  }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-title text-base font-bold relative z-10"
+                  style={{ backgroundColor: "rgba(5,160,73,0.10)", border: "1px solid rgba(5,160,73,0.20)", color: "#05A049" }}
                 >
                   {s.n}
                 </div>
-                <h3
-                  className="font-heading text-lg font-semibold mb-2"
-                  style={{ color: "#00111B" }}
-                >
-                  {s.title}
-                </h3>
-                <p
-                  className="font-body text-sm leading-relaxed max-w-xs mx-auto"
-                  style={{ color: "rgba(0,17,27,0.55)" }}
-                >
-                  {s.body}
-                </p>
+                <div className="text-left md:text-center md:mt-4">
+                  <h3 className="font-heading text-base md:text-lg font-semibold mb-1 md:mb-2" style={{ color: "#00111B" }}>
+                    {s.title}
+                  </h3>
+                  <p className="font-body text-sm leading-relaxed" style={{ color: "rgba(0,17,27,0.55)" }}>
+                    {s.body}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -386,9 +268,5 @@ function HowItWorks() {
     </section>
   );
 }
-
-/* ─────────────────────────────────────────────────────────── */
-/* EXPORT                                                      */
-/* ─────────────────────────────────────────────────────────── */
 
 export { Ticker, WhyAtlas, Modules, HowItWorks };

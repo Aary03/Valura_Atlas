@@ -31,11 +31,7 @@ export default async function ExplorePage() {
   ]);
 
   const lessonCounts = await Promise.all(
-    modules.map((m) =>
-      db.lesson.count({
-        where: { chapter: { moduleId: m.id } },
-      })
-    )
+    modules.map((m) => db.lesson.count({ where: { chapter: { moduleId: m.id } } }))
   );
 
   const completedByModule: Record<string, Set<string>> = {};
@@ -46,37 +42,34 @@ export default async function ExplorePage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-10">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
       {/* Hero */}
-      <div className="mb-10">
+      <div className="mb-8 md:mb-10">
         <p className="font-body text-xs font-semibold text-ink-3 tracking-widest uppercase mb-3">
           VALURA ATLAS
         </p>
-        <h1 className="font-title text-4xl md:text-5xl font-bold text-navy leading-tight mb-3">
-          Navigate global markets<br className="hidden md:block" /> with clarity.
+        <h1 className="font-title text-3xl md:text-5xl font-bold text-navy leading-tight mb-3">
+          Navigate global markets<br className="hidden sm:block" /> with clarity.
         </h1>
-        <p className="font-body text-base text-ink-2 max-w-xl mb-6">
+        <p className="font-body text-sm md:text-base text-ink-2 max-w-xl mb-5">
           Structured learning for Indian investors who want to grow beyond borders.
         </p>
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           {["5 Modules", "25+ Chapters", "Self-paced", "Free"].map((pill) => (
-            <span
-              key={pill}
-              className="font-body text-xs font-medium text-ink-2 bg-white border border-line px-3 py-1.5 rounded-full"
-            >
+            <span key={pill} className="font-body text-xs font-medium text-ink-2 bg-white border border-line px-3 py-1.5 rounded-full">
               {pill}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Module grid */}
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="font-heading text-xl font-semibold text-navy">All Modules</h2>
+      {/* Grid */}
+      <div className="mb-5 flex items-center justify-between">
+        <h2 className="font-heading text-lg md:text-xl font-semibold text-navy">All Modules</h2>
         <span className="font-body text-sm text-ink-3">{modules.length} modules</span>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid sm:grid-cols-2 gap-4">
         {modules.map((mod, idx) => {
           const accent = moduleAccents[idx] ?? moduleAccents[0];
           const total = lessonCounts[idx] || 1;
@@ -90,67 +83,37 @@ export default async function ExplorePage() {
               href={`/modules/${mod.slug}`}
               className="group bg-white rounded-2xl border border-line hover:border-line-2 hover:shadow-md transition-all overflow-hidden"
             >
-              {/* Color strip */}
-              <div
-                className="h-2 w-full"
-                style={{ backgroundColor: accent.bg }}
-              />
-
-              <div className="p-6">
+              <div className="h-1.5 w-full" style={{ backgroundColor: accent.bg }} />
+              <div className="p-5 md:p-6">
                 <div className="flex items-start justify-between mb-3">
-                  <span
-                    className="font-body text-xs font-semibold px-2.5 py-1 rounded-full"
-                    style={{ backgroundColor: accent.bg, color: accent.text }}
-                  >
+                  <span className="font-body text-xs font-semibold px-2.5 py-1 rounded-full"
+                    style={{ backgroundColor: accent.bg, color: accent.text }}>
                     {mod.level}
                   </span>
                   {started && (
-                    <span className="font-body text-xs text-green font-medium">
-                      {pct}% complete
-                    </span>
+                    <span className="font-body text-xs text-green font-medium">{pct}% done</span>
                   )}
                 </div>
-
-                <h3 className="font-heading text-base font-semibold text-navy mb-1.5 group-hover:text-green transition-colors">
+                <h3 className="font-heading text-sm md:text-base font-semibold text-navy mb-1.5 group-hover:text-green transition-colors">
                   {mod.title}
                 </h3>
-                <p className="font-body text-sm text-ink-2 line-clamp-2 mb-4 leading-relaxed">
-                  {mod.description.split("\n\n")[0].slice(0, 120)}…
+                <p className="font-body text-xs md:text-sm text-ink-2 line-clamp-2 mb-4 leading-relaxed">
+                  {mod.description.split("\n\n")[0].slice(0, 100)}…
                 </p>
-
-                <div className="flex items-center gap-4 mb-4 text-xs text-ink-3">
-                  <span className="flex items-center gap-1.5">
-                    <BarChart2 size={12} />
-                    {mod.level}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <BookOpen size={12} />
-                    {mod.chapters} chapters
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock size={12} />
-                    {mod.duration}
-                  </span>
+                <div className="flex items-center gap-3 mb-4 text-xs text-ink-3">
+                  <span className="flex items-center gap-1"><BookOpen size={11} />{mod.chapters} ch</span>
+                  <span className="flex items-center gap-1"><Clock size={11} />{mod.duration}</span>
                 </div>
-
-                {/* Progress bar */}
                 {started && (
                   <div className="mb-4">
                     <div className="h-1.5 bg-canvas rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${pct}%`,
-                          backgroundColor: "#05A049",
-                        }}
-                      />
+                      <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: "#05A049" }} />
                     </div>
                   </div>
                 )}
-
                 <div className="flex items-center gap-1.5 text-sm font-medium text-green group-hover:gap-2.5 transition-all">
-                  {started ? "Continue module" : "View module"}
-                  <ArrowRight size={14} />
+                  {started ? "Continue" : "View module"}
+                  <ArrowRight size={13} />
                 </div>
               </div>
             </Link>

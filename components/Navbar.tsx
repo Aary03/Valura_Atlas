@@ -48,7 +48,7 @@ export default function Navbar({ userName }: NavbarProps) {
         className="sticky top-0 z-50 bg-white border-b border-line"
         style={{ height: 64 }}
       >
-        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
           {/* Logo */}
           <Link href="/explore" className="flex items-center gap-1.5">
             <span className="font-title text-lg font-bold text-navy">Atlas</span>

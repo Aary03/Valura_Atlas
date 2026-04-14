@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-canvas flex flex-col items-center justify-center px-6 text-center">
-      <div className="font-title text-[120px] md:text-[180px] font-bold text-line leading-none select-none">
+      <div className="font-title text-[80px] sm:text-[120px] md:text-[180px] font-bold text-line leading-none select-none">
         404
       </div>
       <h1 className="font-title text-2xl font-bold text-navy mt-2 mb-2">

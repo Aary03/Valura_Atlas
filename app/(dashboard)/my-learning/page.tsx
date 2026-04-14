@@ -88,19 +88,19 @@ export default async function MyLearningPage() {
   const continueMod = moduleStats.find((m) => m.started && m.pct < 100);
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-10">
+    <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-10">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="font-title text-3xl font-bold text-navy">
+      <div className="mb-6 md:mb-8">
+        <h1 className="font-title text-2xl md:text-3xl font-bold text-navy">
           {greeting()}, {userName.split(" ")[0]}.
         </h1>
-        <p className="font-body text-base text-ink-2 mt-1">
+        <p className="font-body text-sm md:text-base text-ink-2 mt-1">
           Here&apos;s where you left off.
         </p>
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
         {[
           { label: "Modules started", value: modulesStarted, icon: BookOpen },
           { label: "Lessons completed", value: lessonsCompleted, icon: CheckCircle2 },

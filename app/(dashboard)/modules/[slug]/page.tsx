@@ -55,7 +55,7 @@ export default async function ModulePage({ params }: Props) {
     : "#";
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-10">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
       <Breadcrumb
         items={[
           { label: "Explore", href: "/explore" },
@@ -63,9 +63,9 @@ export default async function ModulePage({ params }: Props) {
         ]}
       />
 
-      <div className="mt-6 flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
+      <div className="mt-6 flex flex-col lg:flex-row gap-8 lg:gap-14 items-start">
         {/* ─── Left column ──────────────────────────────────── */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 order-2 lg:order-1">
           <span
             className="font-body text-xs font-semibold px-2.5 py-1 rounded-full"
             style={{
@@ -76,7 +76,7 @@ export default async function ModulePage({ params }: Props) {
             {mod.level}
           </span>
 
-          <h1 className="font-title text-4xl md:text-5xl font-bold text-navy mt-4 leading-tight">
+          <h1 className="font-title text-3xl md:text-4xl lg:text-5xl font-bold text-navy mt-4 leading-tight">
             {mod.title}
           </h1>
           <p className="font-body text-base text-ink-2 mt-3 leading-relaxed">
@@ -168,7 +168,7 @@ export default async function ModulePage({ params }: Props) {
         </div>
 
         {/* ─── Right sidebar ────────────────────────────────── */}
-        <div className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-24">
+        <div className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-24 order-1 lg:order-2">
           <div className="bg-white rounded-2xl border border-line p-6">
             <h3 className="font-heading text-base font-semibold text-navy mb-4">
               Skills you will gain

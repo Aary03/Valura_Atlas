@@ -44,31 +44,31 @@ export default function LessonNav({
   }
 
   return (
-    <div className="flex items-center gap-4 mt-14 pt-8 border-t border-line">
+    <div className="flex items-center gap-3 mt-14 pt-8 border-t border-line">
       {prev ? (
         <a
           href={prev.href}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="inline-flex items-center gap-2 font-body text-sm text-ink-2 hover:text-ink px-5 py-2.5 rounded-xl border border-line hover:border-line-2 transition-colors"
+          className="inline-flex items-center gap-1.5 font-body text-sm text-ink-2 hover:text-ink px-4 py-2.5 rounded-xl border border-line hover:border-line-2 transition-colors flex-shrink-0"
         >
-          ← Previous
+          ← <span className="hidden sm:inline">Previous</span>
         </a>
       ) : (
-        <div className="w-28" />
+        <div className="w-10 sm:w-28 flex-shrink-0" />
       )}
 
-      <div className="flex-1 text-center">
+      <div className="flex-1 text-center min-w-0">
         <p className="font-body text-xs text-ink-3 mb-1.5">
-          Lesson {currentIndex} of {totalLessons}
+          {currentIndex} / {totalLessons}
         </p>
-        <div className="flex items-center justify-center gap-1">
-          {Array.from({ length: totalLessons }).map((_, i) => (
+        <div className="flex items-center justify-center gap-0.5 overflow-hidden">
+          {Array.from({ length: Math.min(totalLessons, 12) }).map((_, i) => (
             <span
               key={i}
-              className="rounded-full transition-all"
+              className="rounded-full transition-all flex-shrink-0"
               style={{
-                width: i + 1 === currentIndex ? 16 : 6,
-                height: 6,
+                width: i + 1 === currentIndex ? 14 : 5,
+                height: 5,
                 backgroundColor:
                   i + 1 < currentIndex
                     ? "#05A049"
@@ -85,32 +85,26 @@ export default function LessonNav({
         <button
           onClick={handleNext}
           disabled={loading}
-          className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white px-5 py-2.5 rounded-xl disabled:opacity-60 transition-opacity"
+          className="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-white px-4 py-2.5 rounded-xl disabled:opacity-60 transition-opacity flex-shrink-0"
           style={{ backgroundColor: "#05A049" }}
         >
           {loading ? (
-            <span className="flex items-center gap-2">
-              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              Saving…
-            </span>
+            <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
-            "Next →"
+            <><span className="hidden sm:inline">Next</span> →</>
           )}
         </button>
       ) : (
         <button
           onClick={handleFinish}
           disabled={loading}
-          className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white px-5 py-2.5 rounded-xl disabled:opacity-60 transition-opacity"
+          className="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-white px-4 py-2.5 rounded-xl disabled:opacity-60 transition-opacity flex-shrink-0"
           style={{ backgroundColor: "#05A049" }}
         >
           {loading ? (
-            <span className="flex items-center gap-2">
-              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              Saving…
-            </span>
+            <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
-            "Finish chapter ✓"
+            <><span className="hidden sm:inline">Finish</span> ✓</>
           )}
         </button>
       )}
