@@ -1,0 +1,84 @@
+// Valura Atlas — Prisma Schema
+// Database: SQLite (local dev) → swap datasource for PostgreSQL in production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  name      String?
+  password  String     // bcrypt hash
+  createdAt DateTime   @default(now())
+
+  progress  Progress[]
+
+  @@map("users")
+}
+
+// ─── Module ──────────────────────────────────────────────
+model Module {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  description String
+  level       String    // e.g. "Beginner" | "Intermediate"
+  chapters    Int       // total chapter count
+  duration    String    // human-readable, e.g. "31 min" | "1.8 hrs"
+  imageUrl    String?
+  outcomes    String    @default("[]")  // JSON array of learning outcome strings
+  order       Int
+
+  chapterList Chapter[]
+
+  @@map("modules")
+}
+
+// ─── Chapter ─────────────────────────────────────────────
+model Chapter {
+  id       String   @id @default(cuid())
+  moduleId String
+  title    String
+  order    Int
+
+  module   Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  lessons  Lesson[]
+
+  @@map("chapters")
+}
+
+// ─── Lesson ──────────────────────────────────────────────
+model Lesson {
+  id        String     @id @default(cuid())
+  chapterId String
+  title     String
+  content   String     // markdown / rich text
+  readTime  Int        // minutes
+  order     Int
+
+  chapter   Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  progress  Progress[]
+
+  @@map("lessons")
+}
+
+// ─── Progress ────────────────────────────────────────────
+model Progress {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  completedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@map("progress")
+}
