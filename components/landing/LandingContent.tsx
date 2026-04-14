@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CheckCircle2, BookOpen, Clock, BarChart2, ArrowRight } from "lucide-react";
 import FadeIn from "./FadeIn";
 
@@ -221,8 +222,9 @@ function Modules() {
         <div className="space-y-4">
           {modules.map((m, i) => (
             <FadeIn key={m.num} delay={i * 80}>
-              <div
-                className="card-hover bg-white rounded-2xl px-8 py-6 flex items-center gap-8 cursor-pointer"
+              <Link
+                href={`/modules/${m.slug}`}
+                className="card-hover bg-white rounded-2xl px-8 py-6 flex items-center gap-8 block"
                 style={{ border: "1px solid rgba(0,17,27,0.08)" }}
               >
                 {/* Number */}
@@ -267,19 +269,38 @@ function Modules() {
                 </div>
 
                 {/* Right CTA */}
-                <div className="hidden md:flex items-center gap-1 font-body text-sm font-medium flex-shrink-0 transition-all"
+                <div className="hidden md:flex items-center gap-1 font-body text-sm font-medium flex-shrink-0"
                   style={{ color: "#05A049" }}>
-                  Explore <ArrowRight size={14} />
+                  Start module <ArrowRight size={14} />
                 </div>
-              </div>
+              </Link>
             </FadeIn>
           ))}
         </div>
 
-        <FadeIn className="text-center mt-12">
+        <FadeIn className="text-center mt-12 space-y-4">
           <p className="font-body text-sm" style={{ color: "rgba(0,17,27,0.45)" }}>
             All modules are free for Valura account holders.
           </p>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Link
+              href="/signup"
+              className="font-body text-sm font-semibold text-white px-6 h-10 rounded-full inline-flex items-center gap-2 hover:opacity-90 transition"
+              style={{ backgroundColor: "#05A049" }}
+            >
+              Create free account →
+            </Link>
+            <Link
+              href="/login"
+              className="font-body text-sm px-6 h-10 rounded-full inline-flex items-center gap-2 transition"
+              style={{
+                border: "1px solid rgba(0,17,27,0.15)",
+                color: "rgba(0,17,27,0.65)",
+              }}
+            >
+              Already have an account? Sign in
+            </Link>
+          </div>
         </FadeIn>
       </div>
     </section>

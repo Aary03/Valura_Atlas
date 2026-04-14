@@ -134,25 +134,21 @@ function LessonPreview() {
               </p>
 
               {/* Overlay */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(to top, #0A2236 30%, transparent 100%)",
-                }}
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{
+                background:
+                  "linear-gradient(to top, #0A2236 30%, transparent 100%)",
+              }}
+            >
+              <a
+                href="/signup"
+                className="font-body text-sm font-medium text-white px-6 py-2.5 rounded-full transition-all hover:opacity-90"
+                style={{ backgroundColor: "#05A049" }}
               >
-                <a
-                  href="#access"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector("#access")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="font-body text-sm font-medium text-white px-6 py-2.5 rounded-full transition-all hover:opacity-90"
-                  style={{ backgroundColor: "#05A049" }}
-                >
-                  Sign in to continue reading →
-                </a>
-              </div>
+                Sign up to continue reading →
+              </a>
+            </div>
             </div>
           </div>
         </FadeIn>
@@ -322,28 +318,24 @@ function Access() {
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <div className="flex flex-col items-center gap-2">
               <a
-                href="https://valura.ai/login"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/signup"
                 className="font-body text-lg font-semibold text-white h-14 px-10 rounded-full inline-flex items-center transition-all duration-200 hover:opacity-90"
                 style={{
                   backgroundColor: "#05A049",
                   boxShadow: "0 20px 40px rgba(5,160,73,0.25)",
                 }}
               >
-                Log in to Valura.ai →
+                Create your free account →
               </a>
               <p className="font-body text-xs" style={{ color: "rgba(255,255,252,0.30)" }}>
-                Opens Valura.ai · Your Atlas progress syncs automatically
+                Free access · All 5 modules · No credit card
               </p>
             </div>
           </div>
 
           <div className="flex justify-center mt-4">
             <a
-              href="https://valura.ai/signup"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/login"
               className="font-body text-base h-12 px-8 rounded-full inline-flex items-center transition-all duration-200"
               style={{
                 border: "1px solid rgba(255,255,252,0.15)",
@@ -352,7 +344,7 @@ function Access() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,252,0.35)")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,252,0.15)")}
             >
-              Create a Valura account
+              Already have an account? Sign in
             </a>
           </div>
 
@@ -482,9 +474,7 @@ function LandingFooter() {
           {/* Right CTA */}
           <div className="flex items-start">
             <a
-              href="https://valura.ai/login"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/signup"
               className="font-body text-sm h-9 px-5 rounded-full inline-flex items-center transition-all duration-200"
               style={{
                 border: "1px solid rgba(5,160,73,0.40)",
@@ -493,7 +483,7 @@ function LandingFooter() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "#05A049")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(5,160,73,0.40)")}
             >
-              Log in to Valura.ai →
+              Get started free →
             </a>
           </div>
         </div>

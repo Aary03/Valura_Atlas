@@ -4,14 +4,7 @@ import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Breadcrumb from "@/components/Breadcrumb";
-import {
-  BarChart2,
-  BookOpen,
-  Clock,
-  CheckCircle2,
-  CheckCircle,
-  Lock,
-} from "lucide-react";
+import { BarChart2, BookOpen, Clock, CheckCircle2, CheckCircle } from "lucide-react";
 
 interface Props {
   params: { slug: string };
@@ -28,7 +21,12 @@ export default async function ModulePage({ params }: Props) {
 
   const mod = await db.module.findUnique({
     where: { slug: params.slug },
-    include: { chapters: { orderBy: { order: "asc" }, include: { lessons: { orderBy: { order: "asc" } } } } },
+    include: {
+      chapterList: {
+        orderBy: { order: "asc" },
+        include: { lessons: { orderBy: { order: "asc" } } },
+      },
+    },
   });
 
   if (!mod) notFound();
@@ -48,6 +46,11 @@ export default async function ModulePage({ params }: Props) {
   }
 
   const paragraphs = mod.description.split("\n\n").filter(Boolean);
+  const firstChapter = mod.chapterList[0];
+  const firstLesson = firstChapter?.lessons[0];
+  const startHref = firstChapter && firstLesson
+    ? `/modules/${mod.slug}/chapter/${firstChapter.id}/lesson/${firstLesson.id}`
+    : "#";
 
   return (
     <main className="max-w-7xl mx-auto px-6 py-10">
@@ -61,17 +64,15 @@ export default async function ModulePage({ params }: Props) {
       <div className="mt-6 flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
         {/* ─── Left column ──────────────────────────────────── */}
         <div className="flex-1 min-w-0">
-          <div className="mb-1">
-            <span
-              className="font-body text-xs font-semibold px-2.5 py-1 rounded-full"
-              style={{
-                backgroundColor: mod.level === "Intermediate" ? "#F3E8FF" : "#DCFCE7",
-                color: mod.level === "Intermediate" ? "#7E22CE" : "#15803D",
-              }}
-            >
-              {mod.level}
-            </span>
-          </div>
+          <span
+            className="font-body text-xs font-semibold px-2.5 py-1 rounded-full"
+            style={{
+              backgroundColor: mod.level === "Intermediate" ? "#F3E8FF" : "#DCFCE7",
+              color: mod.level === "Intermediate" ? "#7E22CE" : "#15803D",
+            }}
+          >
+            {mod.level}
+          </span>
 
           <h1 className="font-title text-4xl md:text-5xl font-bold text-navy mt-4 leading-tight">
             {mod.title}
@@ -98,7 +99,7 @@ export default async function ModulePage({ params }: Props) {
           </div>
 
           <Link
-            href={`/modules/${mod.slug}/chapter/${mod.chapters[0]?.id}/lesson/${mod.chapters[0]?.lessons[0]?.id}`}
+            href={startHref}
             className="inline-flex items-center gap-2 font-body text-sm font-semibold text-white h-11 px-6 rounded-xl mt-6 transition-all hover:opacity-90"
             style={{ backgroundColor: "#05A049" }}
           >
@@ -127,17 +128,17 @@ export default async function ModulePage({ params }: Props) {
               Chapters
             </h2>
             <div className="space-y-3">
-              {mod.chapters.map((chapter, ci) => {
-                const allDone = chapter.lessons.every((l) =>
-                  completedLessonIds.has(l.id)
-                );
-                const firstLesson = chapter.lessons[0];
+              {mod.chapterList.map((chapter, ci) => {
+                const allDone =
+                  chapter.lessons.length > 0 &&
+                  chapter.lessons.every((l) => completedLessonIds.has(l.id));
+                const firstL = chapter.lessons[0];
                 return (
                   <Link
                     key={chapter.id}
                     href={
-                      firstLesson
-                        ? `/modules/${mod.slug}/chapter/${chapter.id}/lesson/${firstLesson.id}`
+                      firstL
+                        ? `/modules/${mod.slug}/chapter/${chapter.id}/lesson/${firstL.id}`
                         : "#"
                     }
                     className="group flex items-center justify-between bg-white border border-line hover:border-line-2 rounded-xl px-5 py-4 transition-all hover:shadow-sm"
@@ -150,7 +151,7 @@ export default async function ModulePage({ params }: Props) {
                         {chapter.title}
                       </span>
                     </div>
-                    {allDone && chapter.lessons.length > 0 ? (
+                    {allDone ? (
                       <CheckCircle size={16} color="#05A049" />
                     ) : (
                       <span className="font-body text-xs text-green font-medium group-hover:underline">
@@ -173,11 +174,7 @@ export default async function ModulePage({ params }: Props) {
             <ul className="space-y-3">
               {outcomes.map((outcome, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2
-                    size={15}
-                    className="mt-0.5 flex-shrink-0"
-                    color="#05A049"
-                  />
+                  <CheckCircle2 size={15} className="mt-0.5 flex-shrink-0" color="#05A049" />
                   <span className="font-body text-sm text-ink-2 leading-snug">
                     {outcome}
                   </span>
@@ -186,7 +183,7 @@ export default async function ModulePage({ params }: Props) {
             </ul>
 
             <Link
-              href={`/modules/${mod.slug}/chapter/${mod.chapters[0]?.id}/lesson/${mod.chapters[0]?.lessons[0]?.id}`}
+              href={startHref}
               className="flex items-center justify-center gap-2 font-body text-sm font-semibold text-white h-11 rounded-xl mt-6 transition-all hover:opacity-90"
               style={{ backgroundColor: "#05A049" }}
             >

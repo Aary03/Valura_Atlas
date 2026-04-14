@@ -84,16 +84,16 @@ export default function LandingHero() {
 
         {/* CTA row */}
         <div className="flex items-center justify-center gap-4 flex-wrap mb-8">
-          <button
-            onClick={() => scrollTo("#access")}
-            className="font-body text-base font-semibold text-white h-12 px-8 rounded-full transition-all duration-200 hover:opacity-90"
+          <a
+            href="/signup"
+            className="font-body text-base font-semibold text-white h-12 px-8 rounded-full transition-all duration-200 hover:opacity-90 inline-flex items-center"
             style={{
               backgroundColor: "#05A049",
               boxShadow: "0 8px 24px rgba(5,160,73,0.20)",
             }}
           >
             Start learning free →
-          </button>
+          </a>
           <button
             onClick={() => scrollTo("#modules")}
             className="font-body text-base h-12 px-8 rounded-full transition-all duration-200"

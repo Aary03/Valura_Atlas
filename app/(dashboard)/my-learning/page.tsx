@@ -22,7 +22,7 @@ export default async function MyLearningPage() {
     db.module.findMany({
       orderBy: { order: "asc" },
       include: {
-        chapters: {
+        chapterList: {
           orderBy: { order: "asc" },
           include: { lessons: { orderBy: { order: "asc" } } },
         },
@@ -45,7 +45,7 @@ export default async function MyLearningPage() {
   const completedLessonIds = new Set(progressRecords.map((p) => p.lessonId));
 
   const moduleStats = modules.map((mod) => {
-    const allLessons = mod.chapters.flatMap((c) => c.lessons);
+    const allLessons = mod.chapterList.flatMap((c) => c.lessons);
     const total = allLessons.length;
     const done = allLessons.filter((l) => completedLessonIds.has(l.id)).length;
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
@@ -59,7 +59,7 @@ export default async function MyLearningPage() {
     const lastChapter = lastLesson?.chapter;
 
     // Next lesson after the last completed one
-    const flatLessons = mod.chapters.flatMap((c) => c.lessons);
+    const flatLessons = mod.chapterList.flatMap((c) => c.lessons);
     const lastCompletedIdx = lastLesson
       ? flatLessons.findIndex((l) => l.id === lastLesson.id)
       : -1;
@@ -68,8 +68,8 @@ export default async function MyLearningPage() {
         ? flatLessons[lastCompletedIdx + 1]
         : flatLessons[0];
     const nextChapter = nextLesson
-      ? mod.chapters.find((c) => c.id === nextLesson.chapterId)
-      : mod.chapters[0];
+      ? mod.chapterList.find((c) => c.id === nextLesson.chapterId)
+      : mod.chapterList[0];
 
     const continueHref =
       nextLesson && nextChapter

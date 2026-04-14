@@ -73,9 +73,9 @@ export default function LandingNav() {
 
           {/* CTA buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => scrollTo("#access")}
-              className="font-body text-sm px-5 h-9 rounded-full transition-all duration-200"
+            <a
+              href="/login"
+              className="font-body text-sm px-5 h-9 rounded-full transition-all duration-200 inline-flex items-center"
               style={{
                 border: "1px solid rgba(0,17,27,0.20)",
                 color: "#00111B",
@@ -90,14 +90,14 @@ export default function LandingNav() {
               }}
             >
               Log in
-            </button>
-            <button
-              onClick={() => scrollTo("#access")}
-              className="font-body text-sm font-medium text-white px-5 h-9 rounded-full shadow-sm transition-all duration-200 hover:opacity-90"
+            </a>
+            <a
+              href="/signup"
+              className="font-body text-sm font-medium text-white px-5 h-9 rounded-full shadow-sm transition-all duration-200 hover:opacity-90 inline-flex items-center"
               style={{ backgroundColor: "#05A049" }}
             >
               Get started
-            </button>
+            </a>
           </div>
 
           {/* Mobile hamburger */}
@@ -134,20 +134,20 @@ export default function LandingNav() {
               ))}
             </div>
             <div className="flex flex-col gap-3 pb-6">
-              <button
-                onClick={() => { setMobile(false); setTimeout(() => scrollTo("#access"), 50); }}
-                className="font-body text-base font-medium w-full h-12 rounded-full"
+              <a
+                href="/login"
+                className="font-body text-base font-medium w-full h-12 rounded-full inline-flex items-center justify-center"
                 style={{ border: "1px solid rgba(0,17,27,0.20)", color: "#00111B" }}
               >
                 Log in
-              </button>
-              <button
-                onClick={() => { setMobile(false); setTimeout(() => scrollTo("#access"), 50); }}
-                className="font-body text-base font-semibold text-white w-full h-12 rounded-full"
+              </a>
+              <a
+                href="/signup"
+                className="font-body text-base font-semibold text-white w-full h-12 rounded-full inline-flex items-center justify-center"
                 style={{ backgroundColor: "#05A049" }}
               >
                 Get started free
-              </button>
+              </a>
             </div>
           </div>
         </div>
