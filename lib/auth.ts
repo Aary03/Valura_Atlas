@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET ?? "atlas-dev-secret-change-in-production",
   session: {
     strategy: "jwt",
   },
@@ -18,36 +19,33 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) return null;
+
+        try {
+          const user = await db.user.findUnique({
+            where: { email: credentials.email },
+          });
+
+          if (!user) return null;
+
+          const passwordMatch = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
+          if (!passwordMatch) return null;
+
+          return { id: user.id, email: user.email, name: user.name };
+        } catch {
+          // DB not available during build — return null gracefully
           return null;
         }
-
-        const user = await db.user.findUnique({
-          where: { email: credentials.email },
-        });
-
-        if (!user) return null;
-
-        const passwordMatch = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!passwordMatch) return null;
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
+      if (user) token.id = user.id;
       return token;
     },
     async session({ session, token }) {
