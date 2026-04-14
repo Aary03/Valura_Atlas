@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { CheckCircle2, BookOpen, Clock, BarChart2 } from "lucide-react";
+import { CheckCircle2, BookOpen, Clock } from "lucide-react";
 
 export const metadata = { title: "My Learning" };
 
@@ -15,7 +15,7 @@ function greeting() {
 
 export default async function MyLearningPage() {
   const session = await getServerSession(authOptions);
-  const userId = (session?.user as { id?: string })?.id!;
+  const userId = ((session?.user as { id?: string })?.id) ?? "";
   const userName = session?.user?.name ?? "there";
 
   const [modules, progressRecords] = await Promise.all([

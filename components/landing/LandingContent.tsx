@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CheckCircle2, BookOpen, Clock, BarChart2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 import FadeIn from "./FadeIn";
 
 /* ─────────────────────────────────────────────────────────── */
