@@ -99,9 +99,10 @@ export default async function LessonPage({ params }: Props) {
   const { lesson, chapter, mod, prevLesson, nextLesson, lessonIndexInModule, totalLessonsInModule, lessonIndexInChapter } = data;
 
   const moduleQuestions = QUIZ_QUESTIONS[mod.slug] ?? [];
+  // Use the lesson's global position (currentIndex) so each lesson gets a distinct question
   const quizQuestion =
     moduleQuestions.length > 0
-      ? moduleQuestions[lessonIndexInChapter % moduleQuestions.length]
+      ? moduleQuestions[currentIndex % moduleQuestions.length]
       : null;
 
   const showExercise = !nextLesson || lessonIndexInChapter % 3 === 2;

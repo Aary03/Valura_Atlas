@@ -5,275 +5,380 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-/** Quiz questions per module slug. Each lesson shows one question based on its 0-based position. */
+/**
+ * Quiz questions per module slug.
+ * Questions are assigned by the lesson's 0-based global position within the module
+ * (currentIndex), NOT by position within a chapter — so each lesson shows a unique question.
+ *
+ * Lesson mapping (0-based index → question):
+ *
+ * why-invest-beyond-india (5 lessons):
+ *   0: Ch1/L1 "More than just different stocks"
+ *   1: Ch1/L2 "The correlation that hides in plain sight"
+ *   2: Ch2/L1 "Why borders matter in your portfolio"
+ *   3: Ch3/L1 "What India doesn't give you"
+ *   4: Ch4/L1 "Your portfolio has a currency — do you know which one?"
+ *
+ * accessing-global-markets (7 lessons):
+ *   0: Ch1/L1 "The system that tracks money leaving the country"
+ *   1: Ch2/L1 "LRS in plain English"
+ *   2: Ch3/L1 "How far does the limit actually stretch?"
+ *   3: Ch4/L1 "Three ways to reach international markets"
+ *   4: Ch5/L1 "The platforms worth your attention"
+ *   5: Ch6/L1 "Getting your paperwork in order"
+ *   6: Ch7/L1 "From bank account to brokerage — step by step"
+ *
+ * cross-border-money-movement (4 lessons):
+ *   0: Ch1/L1 "SWIFT, correspondent banks..."
+ *   1: Ch2/L1 "TCS explained"
+ *   2: Ch3/L1 "Where your money goes before it goes anywhere"
+ *   3: Ch4/L1 "When to send — and when to wait"
+ *
+ * understanding-us-stocks (5 lessons):
+ *   0: Ch1/L1 "Shareholder rights across borders"
+ *   1: Ch2/L1 "Two exchanges, thousands of stocks"
+ *   2: Ch3/L1 "The index everyone references..."
+ *   3: Ch4/L1 "Why most investors should start with ETFs"
+ *   4: Ch5/L1 "What you actually keep after costs and tax"
+ *
+ * tax-compliance-global-investors (5 lessons):
+ *   0: Ch1/L1 "The Indian tax treatment of foreign income"
+ *   1: Ch2/L1 "Getting credit for what you already paid abroad"
+ *   2: Ch3/L1 "The trap most investors don't see coming"
+ *   3: Ch4/L1 "The foreign assets disclosure you cannot skip"
+ *   4: Ch5/L1 "Turning losses into a tax planning tool"
+ */
 export const QUIZ_QUESTIONS: Record<string, QuizQuestion[]> = {
+
+  // ── Module 1: Why Invest Beyond India (5 lessons) ─────────
   "why-invest-beyond-india": [
     {
-      question: "What is the primary risk of holding 100% of your portfolio in Indian assets?",
+      // Lesson 0 — "More than just different stocks"
+      question: "Owning 10 Indian stocks instead of 1 is NOT genuine diversification because:",
       options: [
-        "You miss out on currency appreciation",
-        "Your portfolio is fully exposed to a single economic cycle and regulatory environment",
-        "Indian markets are more volatile than global markets",
-        "RBI doesn't allow this level of domestic concentration",
+        "Indian stocks are too expensive to diversify properly",
+        "All 10 are exposed to the same economy, currency, and regulatory environment",
+        "SEBI limits individual stock holdings to 5",
+        "Returns in India are lower than global markets",
       ],
       correctIndex: 1,
-      explanation: "Concentrating wealth in one country exposes your entire portfolio to that country's business cycle, policy risk, and currency — regardless of how strong the underlying assets are.",
+      explanation: "True diversification requires exposure to different economic cycles and currencies. Owning 10 NSE-listed stocks in rupees still leaves you 100% exposed to India's economy — you've only added tickers, not genuine risk separation.",
     },
     {
-      question: "Historically, what has the US equity market delivered annually over a century?",
-      options: ["Around 5%", "Around 8%", "Around 10%", "Around 15%"],
-      correctIndex: 2,
-      explanation: "The US market has compounded at roughly 10% annually over 100+ years, making it one of the most consistent long-term wealth creators in history.",
-    },
-    {
-      question: "Global diversification is best described as:",
+      // Lesson 1 — "The correlation that hides in plain sight"
+      question: "What does a correlation of +0.90 between two assets indicate?",
       options: [
-        "Distrust in India's economic potential",
-        "A hedge against a bad global economy",
-        "Spreading risk across multiple economic cycles and currencies",
-        "Investing only in developed markets",
+        "They are both highly profitable investments",
+        "They move almost identically — providing little diversification benefit",
+        "One asset returns 90% of what the other does",
+        "They are positively correlated only in bull markets",
+      ],
+      correctIndex: 1,
+      explanation: "A correlation close to +1 means the two assets rise and fall together. Adding a second Indian equity fund to your portfolio when correlation is 0.90 barely reduces risk — you're paying two expense ratios for one effective exposure.",
+    },
+    {
+      // Lesson 2 — "Why borders matter in your portfolio"
+      question: "Geographic diversification works primarily because different economies:",
+      options: [
+        "Always have opposite stock market movements",
+        "Have different growth drivers, currencies, and business cycles",
+        "Are required by FEMA to be represented in every portfolio",
+        "Offer higher returns than domestic markets",
+      ],
+      correctIndex: 1,
+      explanation: "Economies run on different fuel cycles — the US on consumer spending and tech, Europe on industrial exports, emerging markets on commodities. When India slows, the US tech sector may continue compounding. Geographic spread captures this independence.",
+    },
+    {
+      // Lesson 3 — "What India doesn't give you"
+      question: "Which sector is significantly under-represented in India's listed markets compared to global ones?",
+      options: [
+        "Financial services and banking",
+        "FMCG and consumer staples",
+        "Semiconductors, AI hardware, and biotech",
+        "Infrastructure and construction",
       ],
       correctIndex: 2,
-      explanation: "Diversification is about not betting everything on one chapter of any story — including India's. It spreads risk across geographies, currencies, and business cycles.",
+      explanation: "India's listed universe excels in financials, IT services, FMCG, and infrastructure. But companies like Nvidia (AI chips), ASML (lithography), and Novo Nordisk (GLP-1 drugs) are only accessible through global markets — you cannot own them via NSE.",
     },
     {
-      question: "Which concept describes the tendency of investors to overweight domestic assets?",
-      options: ["Recency bias", "Home bias", "Anchoring", "Loss aversion"],
-      correctIndex: 1,
-      explanation: "Home bias is a well-documented behavioral finance phenomenon where investors disproportionately hold assets from their home country, often resulting in under-diversification.",
+      // Lesson 4 — "Your portfolio has a currency — do you know which one?"
+      question: "How has the Indian rupee trended against the US dollar over the long term?",
+      options: [
+        "It has remained broadly stable around ₹50 per dollar",
+        "It has appreciated steadily as India's economy grew",
+        "It has gradually depreciated — from ~₹45 in 2000 to over ₹83 today",
+        "It has been pegged to the dollar since 2010",
+      ],
+      correctIndex: 2,
+      explanation: "The rupee has structurally depreciated against the dollar over decades. This means dollar-denominated US investments gain an additional tailwind in rupee terms — even if the underlying asset price doesn't change.",
     },
   ],
 
+  // ── Module 2: Accessing Global Markets (7 lessons) ────────
   "accessing-global-markets": [
     {
-      question: "Which of the following is a direct route for an Indian resident to invest in US stocks?",
+      // Lesson 0 — "The system that tracks money leaving the country"
+      question: "The Liberalised Remittance Scheme (LRS) was designed to:",
       options: [
-        "Buying units of a domestic equity mutual fund",
-        "Opening an account with a foreign broker like Interactive Brokers",
-        "Purchasing gold ETFs listed on NSE",
-        "Investing through an NPS tier-II account",
+        "Restrict Indians from investing abroad by taxing every remittance",
+        "Provide a transparent, legal framework for Indian residents to send money overseas",
+        "Replace the SWIFT system for cross-border transfers",
+        "Allow only NRIs to invest in foreign markets",
       ],
       correctIndex: 1,
-      explanation: "Foreign brokers like Interactive Brokers allow Indian residents to directly hold international securities. This is a direct route, as opposed to feeder funds or international mutual funds.",
+      explanation: "LRS is the RBI's framework that allows Indian residents to remit up to $250,000 per financial year for permitted purposes — including overseas investment. It legitimises and tracks cross-border money movement without requiring per-transaction RBI approval.",
     },
     {
-      question: "What does LRS stand for in the context of international investing?",
+      // Lesson 1 — "LRS in plain English"
+      question: "The $250,000 LRS limit applies:",
       options: [
-        "Linked Remittance Scheme",
-        "Liberalised Remittance Scheme",
-        "Licensed Remittance System",
-        "Local Remittance Standard",
+        "Per purpose category — so you can remit $250K for investments AND another $250K for education",
+        "As a single aggregate limit across ALL LRS purposes combined per financial year",
+        "Per transaction — you can do multiple transactions of $250K each",
+        "Only to investments in the US; other countries have separate limits",
       ],
       correctIndex: 1,
-      explanation: "The Liberalised Remittance Scheme (LRS) is the RBI framework allowing Indian residents to remit up to $250,000 per financial year for permitted purposes including overseas investment.",
+      explanation: "The LRS limit is one aggregate ceiling — not per-purpose. If you remit $100K for education, only $150K remains for investments that year. The limit resets every April 1st.",
     },
     {
-      question: "Which factor should you NOT primarily evaluate a foreign brokerage on?",
+      // Lesson 2 — "How far does the limit actually stretch?"
+      question: "TCS (Tax Collected at Source) on LRS remittances above ₹7 lakhs is best described as:",
       options: [
-        "Regulatory oversight and SIPC coverage",
-        "Currency conversion costs",
-        "The brokerage's founding year",
-        "Commission structure for international trades",
+        "A permanent additional tax that increases your total tax liability",
+        "A penalty for remitting more than the allowed limit",
+        "An advance collection that you can credit against your income tax or claim as a refund",
+        "A charge only applicable to educational remittances",
       ],
       correctIndex: 2,
-      explanation: "A brokerage's age is far less important than its regulatory standing, SIPC coverage (US brokers), cost structure, and how well it handles currency conversion for Indian investors.",
+      explanation: "TCS is not a final or extra tax — it's collected at source by your bank and credited to your PAN. When you file your ITR, this TCS is offset against your income tax liability. Any excess is refunded. The main burden is the short-term cash flow drag.",
     },
     {
-      question: "International mutual funds domiciled in India offer which key advantage?",
+      // Lesson 3 — "Three ways to reach international markets"
+      question: "Which route gives an Indian investor the most direct ownership and lowest transaction cost for US stocks?",
       options: [
-        "No currency conversion costs at all",
-        "Simplified tax treatment under Indian income tax law",
-        "Higher returns than direct US stock investment",
-        "Exemption from LRS limits",
+        "Buying an India-domiciled international mutual fund",
+        "Opening an account directly with a foreign broker like Interactive Brokers",
+        "Using an Indian platform like INDmoney or Vested",
+        "Buying global ETFs listed on NSE",
       ],
       correctIndex: 1,
-      explanation: "India-domiciled international funds simplify compliance — they're taxed like Indian debt funds (post-2023 rules) and don't require foreign asset reporting in Schedule FA.",
+      explanation: "Direct foreign brokers give you actual ownership of US securities at near-zero commissions. Indian platforms add a convenience layer but at slightly higher cost. India-domiciled funds require no LRS but give you units, not direct share ownership.",
     },
     {
-      question: "What is the maximum amount an Indian resident can remit overseas per financial year under LRS?",
-      options: ["$100,000", "$150,000", "$200,000", "$250,000"],
-      correctIndex: 3,
-      explanation: "The LRS limit is currently $250,000 per financial year per individual. It resets on April 1 each year and applies to all LRS transactions combined, not per purpose.",
-    },
-    {
-      question: "Which document is most commonly required when opening an international brokerage account?",
+      // Lesson 4 — "The platforms worth your attention"
+      question: "Interactive Brokers (IBKR) is particularly suitable for Indian investors who:",
       options: [
-        "Form 15CA and 15CB",
-        "Passport, PAN card, and bank statement",
-        "SEBI registration certificate",
-        "RBI approval letter",
+        "Are investing less than ₹1 lakh and want a simple mobile experience",
+        "Need fractional shares and an INR-denominated interface",
+        "Want institutional-grade access to global markets with low commissions and SIPC coverage",
+        "Prefer to avoid the W-8BEN form entirely",
+      ],
+      correctIndex: 2,
+      explanation: "IBKR offers direct access to 150+ markets, SIPC coverage up to $500K, and some of the lowest commission structures available. It suits investors who want full control and are comfortable with a more sophisticated platform.",
+    },
+    {
+      // Lesson 5 — "Getting your paperwork in order"
+      question: "The W-8BEN form, required by US brokers, is used to:",
+      options: [
+        "Prove your Indian citizenship to the RBI",
+        "Authorise LRS remittances from your Indian bank",
+        "Certify you are a non-US person, securing the reduced 25% dividend withholding rate under the India-US DTAA",
+        "Register your brokerage account with SEBI",
+      ],
+      correctIndex: 2,
+      explanation: "The W-8BEN certifies you're a non-US investor, entitling you to the India-US DTAA's 25% dividend withholding rate instead of the default 30%. It takes two minutes to fill and needs renewal every three years.",
+    },
+    {
+      // Lesson 6 — "From bank account to brokerage — step by step"
+      question: "When making your first LRS remittance to a foreign broker, what does your Indian bank primarily verify?",
+      options: [
+        "Whether the foreign broker is registered with SEBI",
+        "That the purpose matches a permitted LRS category and that you haven't exceeded your annual limit",
+        "The creditworthiness of the foreign brokerage firm",
+        "That you have no existing investments in India",
       ],
       correctIndex: 1,
-      explanation: "Most foreign brokers require a valid passport (identity), PAN (Indian tax ID), and recent bank statements (proof of address/funds). Form 15CA/CB is for tax withholding, not account opening.",
-    },
-    {
-      question: "A 'feeder fund' in the context of international investing is:",
-      options: [
-        "A fund that invests only in emerging markets",
-        "An Indian mutual fund that invests in a foreign master fund",
-        "A fund that charges performance fees",
-        "A fund backed by the Government of India",
-      ],
-      correctIndex: 1,
-      explanation: "A feeder fund is an Indian mutual fund whose primary purpose is to invest in a foreign (usually US or global) master fund — giving Indian investors indirect access to international markets.",
+      explanation: "Your bank acts as the LRS gatekeeper — it confirms the purpose is permitted (e.g. overseas investment), checks your cumulative LRS usage, collects TCS if applicable, and files the remittance with RBI. It does not evaluate the broker's quality.",
     },
   ],
 
+  // ── Module 3: Cross-Border Money Movement (4 lessons) ─────
   "cross-border-money-movement": [
     {
-      question: "What hidden cost most significantly erodes returns when moving money internationally?",
+      // Lesson 0 — "SWIFT, correspondent banks, and why your money takes 3 days"
+      question: "Why do international bank transfers typically take 2–5 business days to arrive?",
       options: [
-        "SWIFT message fees",
-        "The forex conversion spread charged by banks",
-        "RBI processing charges",
-        "Brokerage account opening fees",
+        "RBI mandates a holding period for all overseas transfers",
+        "Each transfer passes through a chain of correspondent banks, each with their own processing windows",
+        "SWIFT encrypts messages slowly to ensure security",
+        "Banks intentionally delay transfers to earn overnight interest",
       ],
       correctIndex: 1,
-      explanation: "Forex conversion spreads can cost 1–3% per transaction. On large remittances, this silently erodes returns before you've even invested the money.",
+      explanation: "Most international transfers travel through correspondent banks — intermediaries that hold accounts with each other globally. Each hop in the chain adds processing time and potentially fees, explaining why a simple wire can take several days.",
     },
     {
-      question: "Under LRS, which of these is NOT a permitted purpose for remittance?",
+      // Lesson 1 — "TCS explained: not a tax, but a prepayment"
+      question: "TCS of 20% is levied on LRS remittances above ₹7 lakhs per year. This money is:",
       options: [
-        "Investing in foreign equity",
-        "Funding a foreign education",
-        "Transferring money to fund a foreign business you own",
-        "Purchasing foreign real estate for commercial leasing without RBI approval",
+        "Lost permanently — it funds the government's foreign reserve pool",
+        "Refundable only if your employer requests it",
+        "Credited to your PAN and adjustable against your total income tax when you file your ITR",
+        "Paid directly to the foreign country you are remitting to",
       ],
-      correctIndex: 3,
-      explanation: "While LRS permits several categories, commercial real estate acquisitions overseas typically require RBI approval beyond standard LRS provisions. Always verify with a FEMA consultant for edge cases.",
+      correctIndex: 2,
+      explanation: "TCS is a prepayment mechanism, not an extra tax. The collected amount is reflected against your PAN. When filing your ITR, it reduces your net tax payable. If your total tax liability is lower than the TCS collected, you get a refund.",
     },
     {
-      question: "TCS (Tax Collected at Source) on LRS remittances is:",
+      // Lesson 2 — "Where your money goes before it goes anywhere"
+      question: "The forex 'spread' charged during currency conversion refers to:",
       options: [
-        "A final tax — you cannot claim it back",
-        "Collectable at source but creditable against your income tax liability",
-        "Charged only on remittances above $500,000",
-        "Applicable only to educational remittances",
-      ],
-      correctIndex: 1,
-      explanation: "TCS on LRS is not a final tax. It's collected at source by the bank and can be credited against your total income tax liability or claimed as a refund when filing your ITR.",
-    },
-    {
-      question: "What is the most reliable way to get a better forex conversion rate than your bank's standard rate?",
-      options: [
-        "Convert on Sundays when banks are closed",
-        "Use a dedicated money transfer platform and compare rates in real-time",
-        "Ask your relationship manager nicely",
-        "Convert in cash at the airport",
+        "A fixed government levy on all currency exchanges",
+        "The gap between the mid-market exchange rate and the rate your bank actually offers you",
+        "The time delay between ordering and receiving foreign currency",
+        "The minimum amount you must convert in a single transaction",
       ],
       correctIndex: 1,
-      explanation: "Platforms like Wise, Instarem, or bank forex desks often offer tighter spreads than retail banking rates. Always compare in real-time before executing a large remittance.",
+      explanation: "The spread is the difference between the real (mid-market) rate and what your bank charges. A 1.5% spread on ₹20 lakhs costs ₹30,000 before you've even invested. Comparing rates across platforms before large remittances can meaningfully improve your net returns.",
+    },
+    {
+      // Lesson 3 — "When to send — and when to wait"
+      question: "When timing a large international remittance, which factor is most within an investor's control?",
+      options: [
+        "Predicting the USD/INR exchange rate movement accurately",
+        "Avoiding the TCS altogether by splitting remittances across family members",
+        "Comparing real-time forex rates across banks and transfer platforms before executing",
+        "Timing the transfer to coincide with US Federal Reserve announcements",
+      ],
+      correctIndex: 2,
+      explanation: "While you cannot predict exchange rate movements reliably, you can always compare rates across platforms in real-time. Even a 0.5% improvement on a ₹20 lakh remittance saves ₹10,000. This is the one lever fully in your hands.",
     },
   ],
 
+  // ── Module 4: Understanding US Stocks (5 lessons) ─────────
   "understanding-us-stocks": [
     {
-      question: "The S&P 500 index tracks:",
+      // Lesson 0 — "Shareholder rights across borders"
+      question: "As an Indian investor owning US stocks through a foreign broker, which right do you typically NOT automatically receive?",
       options: [
-        "The 500 largest companies listed on the NYSE only",
-        "500 leading publicly traded US companies selected by a committee",
-        "The top 500 global companies by market cap",
-        "All US companies with revenue above $1 billion",
+        "The right to receive dividends",
+        "The right to vote at company AGMs on operational matters",
+        "The right to sell your shares at any time during market hours",
+        "The right to receive your proportional share of assets in a bankruptcy",
       ],
       correctIndex: 1,
-      explanation: "The S&P 500 is a committee-selected index of 500 leading US publicly traded companies across all major industries. It includes NYSE and Nasdaq listed companies.",
+      explanation: "While Indian investors do receive dividends and can trade freely, voting rights at US company AGMs are typically not passed through to investors who hold via custodian or feeder structures. Direct account holders at brokers like IBKR may receive proxy voting rights.",
     },
     {
-      question: "A company's 10-K filing is best described as:",
+      // Lesson 1 — "Two exchanges, thousands of stocks"
+      question: "What is the primary difference between the NYSE and Nasdaq?",
       options: [
-        "A quarterly earnings summary",
-        "A press release about a major corporate event",
-        "A comprehensive annual report filed with the SEC",
-        "An analyst report published by Wall Street banks",
+        "NYSE only lists US companies; Nasdaq lists global companies",
+        "Nasdaq uses a dealer/market-maker model while NYSE originated as an auction-based exchange",
+        "Only large-cap stocks trade on NYSE; Nasdaq is exclusively for small-caps",
+        "NYSE operates 24 hours; Nasdaq has regular 9:30am–4pm hours only",
+      ],
+      correctIndex: 1,
+      explanation: "NYSE started as an auction exchange (specialists matching buyers and sellers on a floor) while Nasdaq was born as an electronic dealer-based market. Today both are largely electronic, but their origin and listing requirements differ — Nasdaq tends to attract more tech-heavy listings.",
+    },
+    {
+      // Lesson 2 — "The index everyone references but few understand deeply"
+      question: "Because the S&P 500 is market-cap weighted, what is the practical implication for investors?",
+      options: [
+        "Each of the 500 companies contributes exactly 0.2% to the index",
+        "A small number of giant companies (like Apple and Microsoft) represent a disproportionately large share of the index",
+        "Smaller companies in the index are excluded from returns calculations",
+        "The index automatically rebalances daily to maintain equal weights",
+      ],
+      correctIndex: 1,
+      explanation: "Market-cap weighting means the biggest companies by market value dominate the index. Apple, Microsoft, Nvidia and a few others each represent 5–7% of the S&P 500, so your 'diversified' index fund actually has heavy exposure to a handful of US mega-cap tech names.",
+    },
+    {
+      // Lesson 3 — "Why most investors should start with ETFs"
+      question: "A broad market ETF like VOO (tracking the S&P 500) is preferred over individual stocks for a beginner because:",
+      options: [
+        "ETFs are guaranteed to deliver positive returns every year",
+        "ETFs avoid all taxes on capital gains",
+        "A single ETF purchase provides instant diversification across hundreds of companies at a low expense ratio",
+        "ETFs have no currency risk for Indian investors",
       ],
       correctIndex: 2,
-      explanation: "The 10-K is a comprehensive annual report that US public companies must file with the SEC. It includes audited financials, business description, risk factors, and management's discussion — far more detailed than an Indian annual report.",
+      explanation: "One ETF share gives you proportional exposure to all 500 companies in the S&P 500. Expense ratios for index ETFs like VOO are as low as 0.03%. This combination of instant diversification and minimal cost makes them ideal for investors building their first global allocation.",
     },
     {
-      question: "What does expense ratio represent in the context of an ETF?",
+      // Lesson 4 — "What you actually keep after costs and tax"
+      question: "US dividends received by Indian investors are subject to a 25% withholding tax at source. You can:",
       options: [
-        "The fee charged per trade execution",
-        "The annual cost of fund management as a percentage of assets",
-        "The fund's tracking error vs its benchmark",
-        "The ratio of US stocks to international stocks",
+        "Do nothing — it is a final tax and cannot be recovered",
+        "Claim the 25% as a foreign tax credit against your Indian income tax liability when filing your ITR",
+        "Receive a full refund from the IRS if you file a US tax return",
+        "Avoid it by holding stocks through an Indian mutual fund",
       ],
       correctIndex: 1,
-      explanation: "Expense ratio is the annual management fee charged by an ETF, expressed as a percentage of your investment. For index ETFs, this is typically 0.03–0.20% — far lower than actively managed funds.",
-    },
-    {
-      question: "When the S&P 500 is described as 'top-heavy with tech,' it means:",
-      options: [
-        "The index has too many technology companies listed",
-        "A small number of large tech companies represent a disproportionate share of the index's weight",
-        "Tech stocks in the S&P 500 are overpriced",
-        "The index committee has set a tech sector cap",
-      ],
-      correctIndex: 1,
-      explanation: "Because the S&P 500 is market-cap weighted, companies like Apple, Microsoft, and Nvidia each represent 5–7% of the entire index. This concentration means your 'diversified' S&P 500 investment has significant tech exposure.",
-    },
-    {
-      question: "An 8-K filing is submitted when:",
-      options: [
-        "A company files its annual report",
-        "A company reports quarterly earnings",
-        "A material corporate event occurs that investors should know about immediately",
-        "A new CFO updates their financial projections",
-      ],
-      correctIndex: 2,
-      explanation: "8-K filings are triggered by material events — CEO changes, acquisitions, earnings misses, legal proceedings. They must be filed within 4 business days of the triggering event.",
+      explanation: "Under the India-US DTAA, the 25% US withholding tax is creditable against your Indian income tax. Include the foreign dividend income in your ITR and claim the credit for taxes paid abroad — so you're not taxed twice on the same income.",
     },
   ],
 
+  // ── Module 5: Tax & Compliance for Global Investors (5 lessons)
   "tax-compliance-global-investors": [
     {
-      question: "What does DTAA stand for, and what is its primary purpose?",
+      // Lesson 0 — "The Indian tax treatment of foreign income"
+      question: "How are capital gains from selling US stocks taxed for an Indian resident?",
       options: [
-        "Direct Tax Avoidance Agreement — to legally minimize taxes",
-        "Double Taxation Avoidance Agreement — to prevent the same income from being taxed in two countries",
-        "Domestic Tax Adjustment Act — for Indian resident investors only",
-        "Deferred Tax Accounting Agreement — for corporate entities",
-      ],
-      correctIndex: 1,
-      explanation: "DTAA (Double Taxation Avoidance Agreement) is a treaty between two countries ensuring the same income isn't taxed twice. India has DTAAs with the US, UK, Singapore, and 90+ other countries.",
-    },
-    {
-      question: "Schedule FA in your Indian ITR is used to:",
-      options: [
-        "Claim foreign tax credits",
-        "Report foreign assets held at any point during the financial year",
-        "Declare income from foreign employment",
-        "Calculate capital gains on international ETFs",
-      ],
-      correctIndex: 1,
-      explanation: "Schedule FA (Foreign Assets) is a mandatory disclosure in the Indian ITR for residents holding any foreign financial asset — stocks, accounts, ETFs — at any point during the year. Non-disclosure can attract significant penalties.",
-    },
-    {
-      question: "What is the PFIC trap that Indian investors in US mutual funds must be aware of?",
-      options: [
-        "US mutual funds charge higher fees to foreign investors",
-        "US mutual funds are classified as Passive Foreign Investment Companies under US tax law, creating punitive tax treatment for US tax purposes",
-        "Indian investors cannot repatriate gains from US mutual funds",
-        "US mutual funds don't disclose their holdings to Indian tax authorities",
-      ],
-      correctIndex: 1,
-      explanation: "PFIC (Passive Foreign Investment Company) rules under US tax code apply to foreign investors in US-registered mutual funds. For Indian investors, this mainly matters if you hold a US visa or Green Card — but it's worth understanding the exposure.",
-    },
-    {
-      question: "Withholding tax on US dividends for Indian residents is typically:",
-      options: ["0%", "10%", "25%", "30%"],
-      correctIndex: 2,
-      explanation: "The US withholds 25% tax on dividends paid to Indian residents (under the India-US DTAA). You can claim credit for this 25% against your Indian tax liability when filing your ITR.",
-    },
-    {
-      question: "Under FEMA, an Indian resident's overseas investment obligation is primarily:",
-      options: [
-        "To repatriate all foreign investment income within 30 days",
-        "To obtain RBI permission before each overseas investment",
-        "To comply with LRS limits and report overseas assets in their annual ITR",
-        "To maintain a minimum bank balance in India equivalent to overseas investments",
+        "They are exempt as they were earned outside India",
+        "They are taxed in the US only — India has no claim on foreign gains",
+        "They are included in Indian taxable income and taxed per India's capital gains rules, with credit for foreign taxes paid",
+        "They are taxed at a flat 10% regardless of holding period",
       ],
       correctIndex: 2,
-      explanation: "For most Indian resident investors, FEMA compliance means staying within LRS limits for remittances and accurately disclosing foreign assets and income in the annual ITR. No per-investment RBI permission is needed under LRS.",
+      explanation: "Indian residents are taxed on their global income. Gains from US stocks are included in your Indian ITR. If taxes were paid abroad (e.g. US withholding on dividends), you can claim a DTAA-based foreign tax credit to avoid double taxation.",
+    },
+    {
+      // Lesson 1 — "Getting credit for what you already paid abroad"
+      question: "What is the purpose of the Double Taxation Avoidance Agreement (DTAA) between India and the US?",
+      options: [
+        "To allow Indian investors to completely avoid paying tax on US income",
+        "To ensure the same income is not taxed in full in both India and the US",
+        "To set a uniform tax rate of 15% for all cross-border investments",
+        "To exempt dividend income from US withholding tax for Indian investors",
+      ],
+      correctIndex: 1,
+      explanation: "The India-US DTAA prevents double taxation by allowing the tax paid in one country to be credited against the tax owed in the other. Indian investors pay 25% US withholding on dividends, then claim that as a credit in their Indian ITR.",
+    },
+    {
+      // Lesson 2 — "The trap most investors don't see coming"
+      question: "Why are US-domiciled mutual funds (like a Vanguard fund registered in the US) problematic for Indian investors?",
+      options: [
+        "They charge higher management fees to foreign investors",
+        "They cannot be redeemed from India",
+        "They are classified as PFICs under US tax law, potentially creating complex punitive tax issues for investors with US tax obligations",
+        "They are banned under FEMA for Indian residents",
+      ],
+      correctIndex: 2,
+      explanation: "PFIC (Passive Foreign Investment Company) rules under the US tax code can create punitive tax treatment for US taxpayers holding foreign funds. While this mainly affects those with US visas or Green Cards, it's important to understand before investing in US-registered funds.",
+    },
+    {
+      // Lesson 3 — "The foreign assets disclosure you cannot skip"
+      question: "Schedule FA in your Indian Income Tax Return must be filed if you:",
+      options: [
+        "Earned more than ₹10 lakhs from foreign investments in the financial year",
+        "Held any foreign financial asset (stocks, accounts, ETFs) at any point during the financial year",
+        "Remitted more than $50,000 under LRS during the year",
+        "Have a foreign bank account with a balance above $10,000",
+      ],
+      correctIndex: 1,
+      explanation: "Schedule FA (Foreign Assets) disclosure is mandatory for any Indian resident who held foreign financial assets at any point during the financial year — regardless of the amount. Non-disclosure attracts penalties up to ₹10 lakh under the Black Money Act.",
+    },
+    {
+      // Lesson 4 — "Turning losses into a tax planning tool"
+      question: "Tax-loss harvesting in a global portfolio means:",
+      options: [
+        "Selling losing investments to permanently reduce your tax liability to zero",
+        "Moving all investments to tax-haven countries",
+        "Strategically selling positions at a loss to offset capital gains and reduce your net taxable income",
+        "Deferring tax payments on gains until you repatriate money to India",
+      ],
+      correctIndex: 2,
+      explanation: "Tax-loss harvesting involves selling an underperforming position to book a capital loss, which can offset capital gains elsewhere in your portfolio. Across geographies, losses in US stocks can offset gains from Indian equity sales, reducing your overall tax bill.",
     },
   ],
 };
